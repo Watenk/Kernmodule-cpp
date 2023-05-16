@@ -7,8 +7,13 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "test program");
-    window.setFramerateLimit(144);
+    sf::RenderWindow* window;
+    window = new sf::RenderWindow(sf::VideoMode(200, 200), "SFML");
+    window->setFramerateLimit(144);
+
+    while (window->isOpen()) {
+
+    }
 
     return 0;
 }
