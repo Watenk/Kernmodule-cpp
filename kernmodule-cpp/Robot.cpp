@@ -3,13 +3,14 @@
 #include <SFML/Graphics.hpp>
 #include <random>
 
+#include "GameSettings.h"
 #include "Robot.h"
 
-Robot::Robot(sf::Vector2f pos, sf::Texture& texture, int screenWidth, int screenHeight) : pos(pos), screenWidth(screenWidth), screenHeight(screenHeight) {
+Robot::Robot(sf::Vector2f pos, sf::Texture& texture) : pos(pos) {
 	sprite.setTexture(texture);
-	velocity.x = GetRandom(-3, 3);
-	velocity.y = GetRandom(-3, 3);
-	sprite.setColor(sf::Color(1, 255, 255, 128));
+	sprite.setScale(2, 2);
+	velocity.x = (float)GetRandom(-3, 3);
+	velocity.y = (float)GetRandom(-3, 3);
 }
 
 void Robot::Update() {

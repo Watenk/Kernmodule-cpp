@@ -3,7 +3,11 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
+#include "GameSettings.h"
+#include "Inputs.h"
+#include "Time.h"
 #include "Robot.h"
+#include "Player.h"
 
 using sf::RenderWindow;
 using sf::VideoMode;
@@ -27,20 +31,18 @@ void UPS();
 void Draw();
 RenderWindow* GenerateWindow();
 void WindowEvents(RenderWindow* window, Event event);
-void CalcFrameRate();
 
-//Settings
-int screenWidth = 1280;
-int screenHeight = 720;
-string windowName = "SFML";
-int targetFrameRate = 144;
-float UPSSpeed = 60;
+Inputs* inputs;
+Watenk::Time* watenkTime;
+RenderWindow* window;
 
 //Textures
+Texture* playerTexture;
 Texture* robotTexture;
 
-//Robots
-Robot* robots[10000];
+//Objects
+Player* player;
+Robot* robots[20];
 
 //Text
 Font* oswaldRegular;
@@ -51,9 +53,6 @@ int frameRate;
 int previousFrame;
 float deltaTime;
 float UPSDeltaTime;
-
-RenderWindow* window;
-Clock* sfClock;
 
 int main()
 {
@@ -69,21 +68,31 @@ int main()
 //--------------------------------------------------------------
 
 void Start() {
+    inputs = new Inputs();
+    watenkTime = new Watenk::Time;
     window = GenerateWindow();
-    sfClock = new Clock();
 
     //textures
+    playerTexture = new Texture();
+    if (!playerTexture->loadFromFile("Textures/player.png"))
+    {
+        cout << "Textures/player.png missing!" << endl;
+    }
+
     robotTexture = new Texture();
     if (!robotTexture->loadFromFile("Textures/robot.png"))
     {
         cout << "Textures/robot.png missing!" << endl;
     }
 
-    //Robots
+    //Objects
+    player = new Player(sf::Vector2f(screenWidth / 2, screenHeight - 100), *playerTexture);
+    
     for (int i = 0; i < sizeof(robots) / sizeof(Robot*); i++) {
 
-        robots[i] = new Robot(sf::Vector2f(100, 100), *robotTexture, screenWidth, screenHeight);
+        robots[i] = new Robot(sf::Vector2f(100, 100), *robotTexture);
     }
+
 
     //text
     oswaldRegular = new Font();
@@ -100,6 +109,9 @@ void Start() {
 
 void Update() {
 
+    inputs->Update();
+    watenkTime->Update();
+
     //SFML Events
     sf::Event event;
     while (window->pollEvent(event))
@@ -107,9 +119,8 @@ void Update() {
         WindowEvents(window, event);
     }
     
-    CalcFrameRate();
-
-    UPSDeltaTime += deltaTime;
+    //UPS
+    UPSDeltaTime += watenkTime->deltaTime;
     if (UPSDeltaTime >= 1) {
         UPSDeltaTime = 0;
         UPS();
@@ -119,6 +130,8 @@ void Update() {
 }
 
 void UPS() {
+
+    player->Update();
 
     //Robots
     for (int i = 0; i < sizeof(robots) / sizeof(Robot*); i++) {
@@ -130,13 +143,16 @@ void Draw() {
     // clear the window with black color
     window->clear(Color::Black);
 
-    //FPS Text
+    //Text
     Text fpsText;
     fpsText.setFont(*oswaldRegular);
-    fpsText.setString(to_string(frameRate));
+    fpsText.setString(to_string(watenkTime->frameRate));
     fpsText.setCharacterSize(15);
     fpsText.setFillColor(Color::White);
     window->draw(fpsText);
+
+    //Objects
+    window->draw(player->sprite);
 
     for (int i = 0; i < sizeof(robots) / sizeof(Robot*); i++) {
         window->draw(robots[i]->sprite);
@@ -163,18 +179,9 @@ void WindowEvents(RenderWindow* window, sf::Event event) {
 
 RenderWindow* GenerateWindow() {
     sf::RenderWindow* window;
-    window = new RenderWindow(VideoMode(screenWidth, screenHeight), windowName);
+    window = new RenderWindow(VideoMode(screenWidth, screenHeight), windowName, sf::Style::Fullscreen);
     cout << "Opening Window" << endl;
     window->setFramerateLimit(targetFrameRate);
 
     return window;
-}
-
-void CalcFrameRate() {
-    int elapsedTime = sfClock->getElapsedTime().asMicroseconds();
-    int frameTime = elapsedTime - previousFrame;
-    frameRate = 1000000 / frameTime;
-    previousFrame = elapsedTime;
-
-    deltaTime = UPSSpeed / frameRate;
 }
