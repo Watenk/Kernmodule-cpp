@@ -2,12 +2,12 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <list>
 
 #include "GameSettings.h"
 #include "Inputs.h"
 #include "Time.h"
-#include "Robot.h"
-#include "Player.h"
+#include "PhysicsObject.h"
 
 using sf::RenderWindow;
 using sf::VideoMode;
@@ -23,14 +23,16 @@ using std::cout;
 using std::endl;
 using std::string;
 using std::to_string;
+using std::list;
 
-//Functions
-void Start();
-void Update();
-void UPS();
-void Draw();
-RenderWindow* GenerateWindow();
-void WindowEvents(RenderWindow* window, Event event);
+void start();
+void update();
+void ups();
+void draw();
+RenderWindow* generateWindow();
+void windowEvents(RenderWindow* window, sf::Event event);
+PhysicsObject* getPhysicsObject(list<PhysicsObject*> currentList, int targetIndex);
+void addPhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, int weight, sf::Texture& texture);
 
 Inputs* inputs;
 Watenk::Time* watenkTime;
@@ -41,8 +43,8 @@ Texture* playerTexture;
 Texture* robotTexture;
 
 //Objects
-Player* player;
-Robot* robots[20];
+list<PhysicsObject*> enemys;
+int physicsObjectsIndex = 0;
 
 //Text
 Font* oswaldRegular;
@@ -56,10 +58,10 @@ float UPSDeltaTime;
 
 int main()
 {
-    Start();
+    start();
 
     while (window->isOpen()) {
-        Update();
+        update();
     }
 
     return 0;
@@ -67,10 +69,10 @@ int main()
 
 //-------------------------------------------------------------
 
-void Start() {
+void start() {
     inputs = new Inputs();
     watenkTime = new Watenk::Time;
-    window = GenerateWindow();
+    window = generateWindow();
 
     //textures
     playerTexture = new Texture();
@@ -86,13 +88,10 @@ void Start() {
     }
 
     //Objects
-    player = new Player(sf::Vector2f(screenWidth / 2, screenHeight - 100), *playerTexture);
-    
-    for (int i = 0; i < sizeof(robots) / sizeof(Robot*); i++) {
+    addPhysicsObject(sf::Vector2f(500, 500), sf::Vector2f(2, 2), sf::Vector2f(0, 0), sf::Vector2f(1, 1), 50, *robotTexture); // Player
 
-        robots[i] = new Robot(sf::Vector2f(100, 100), *robotTexture);
-    }
 
+    getPhysicsObject(enemys, 0)->addInstantForce(sf::Vector2f(15, 10));
 
     //text
     oswaldRegular = new Font();
@@ -107,7 +106,7 @@ void Start() {
     }
 }
 
-void Update() {
+void update() {
 
     inputs->Update();
     watenkTime->Update();
@@ -116,30 +115,27 @@ void Update() {
     sf::Event event;
     while (window->pollEvent(event))
     {
-        WindowEvents(window, event);
+        windowEvents(window, event);
     }
     
     //UPS
     UPSDeltaTime += watenkTime->deltaTime;
     if (UPSDeltaTime >= 1) {
         UPSDeltaTime = 0;
-        UPS();
+        ups();
     }
 
-    Draw();
+    draw();
 }
 
-void UPS() {
-
-    player->Update();
-
-    //Robots
-    for (int i = 0; i < sizeof(robots) / sizeof(Robot*); i++) {
-        robots[i]->Update();
+void ups() {
+    
+    for (list<PhysicsObject*>::iterator i = enemys.begin(); i != enemys.end(); i++) {
+        (*i)->ups();
     }
 }
 
-void Draw() {
+void draw() {
     // clear the window with black color
     window->clear(Color::Black);
 
@@ -152,10 +148,8 @@ void Draw() {
     window->draw(fpsText);
 
     //Objects
-    window->draw(player->sprite);
-
-    for (int i = 0; i < sizeof(robots) / sizeof(Robot*); i++) {
-        window->draw(robots[i]->sprite);
+    for (list<PhysicsObject*>::iterator it = enemys.begin(); it != enemys.end(); it++) {
+        window->draw((*it)->sprite);
     }
 
     // end the current frame
@@ -164,7 +158,7 @@ void Draw() {
 
 //------------------------------------------------------------------
 
-void WindowEvents(RenderWindow* window, sf::Event event) {
+void windowEvents(RenderWindow* window, sf::Event event) {
 
     if (event.type == Event::Closed) {
         cout << "Closing Window" << endl;
@@ -177,11 +171,27 @@ void WindowEvents(RenderWindow* window, sf::Event event) {
     }
 }
 
-RenderWindow* GenerateWindow() {
+RenderWindow* generateWindow() {
     sf::RenderWindow* window;
     window = new RenderWindow(VideoMode(screenWidth, screenHeight), windowName, sf::Style::Fullscreen);
     cout << "Opening Window" << endl;
     window->setFramerateLimit(targetFrameRate);
 
     return window;
+}
+
+PhysicsObject* getPhysicsObject(list<PhysicsObject*> currentList, int targetIndex) {
+
+    for (list<PhysicsObject*>::iterator it = enemys.begin(); it != enemys.end(); it++) {
+        if ((*it)->getIndex() == targetIndex) {
+            return *it;
+        }
+    }
+
+    return NULL;
+}
+
+void addPhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, int weight, sf::Texture& texture) {
+    enemys.push_back(new PhysicsObject(pos, size, colliderOffset, colliderSize, weight, texture, physicsObjectsIndex, false));
+    physicsObjectsIndex++;
 }

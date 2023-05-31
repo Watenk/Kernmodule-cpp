@@ -133,6 +133,7 @@
     <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="Inputs.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PhysicsObject.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Robot.cpp" />
     <ClCompile Include="Time.cpp" />
@@ -140,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="Inputs.h" />
+    <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Robot.h" />
     <ClInclude Include="Time.h" />
