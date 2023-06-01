@@ -32,7 +32,7 @@ void draw();
 RenderWindow* generateWindow();
 void windowEvents(RenderWindow* window, sf::Event event);
 PhysicsObject* getPhysicsObject(list<PhysicsObject*> currentList, int targetIndex);
-void addPhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, int weight, sf::Texture& texture);
+void addPhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, int mass, sf::Texture& texture);
 
 Inputs* inputs;
 Watenk::Time* watenkTime;
@@ -191,7 +191,7 @@ PhysicsObject* getPhysicsObject(list<PhysicsObject*> currentList, int targetInde
     return NULL;
 }
 
-void addPhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, int weight, sf::Texture& texture) {
-    enemys.push_back(new PhysicsObject(pos, size, colliderOffset, colliderSize, weight, texture, physicsObjectsIndex, false));
+void addPhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, int mass, sf::Texture& texture) {
+    enemys.push_back(new PhysicsObject(pos, size, colliderOffset, colliderSize, mass, texture, physicsObjectsIndex, false));
     physicsObjectsIndex++;
 }

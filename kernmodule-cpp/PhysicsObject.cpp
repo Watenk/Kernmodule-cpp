@@ -4,8 +4,8 @@
 
 #include "PhysicsObject.h"
 
-PhysicsObject::PhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, int weight, sf::Texture& texture, int index, bool debug)
-	: pos(pos), size(size), colliderOffset(colliderOffset), colliderSize(colliderSize), weight(weight), texture(texture), index(index), debug(debug){
+PhysicsObject::PhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, int mass, sf::Texture& texture, int index, bool debug)
+	: pos(pos), size(size), colliderOffset(colliderOffset), colliderSize(colliderSize), mass(mass), texture(texture), index(index), debug(debug), objectStatic(false){
 
 	sprite.setTexture(texture);
 	sprite.setScale(size.x, size.y);
@@ -45,41 +45,44 @@ void PhysicsObject::physics() {
 	std::cout << velocity.x << ", " << velocity.y << std::endl;
 
 	//Set new Pos
-	pos.x += velocity.x / weight;
-	pos.y += velocity.y / weight;
+	pos.x += velocity.x / mass;
+	pos.y += velocity.y / mass;
 }
 
 void PhysicsObject::calcFriction() {
 	// Friction
 	// staticFrictionCoefficient = initial friction force
 	// kineticFrictionCoefficient =  when a object already moves
-	// friction (f), frictionCoefficient (u), normalForce (N), mass (m), gravity (g)
-	// 
-	// f = u * N
-	// N = m * g
 
-	float normalForce = weight * gravity;
-	float friction;
+	sf::Vector2f normalForce = convertVelocityToNewton(sf::Vector2f(gravity, gravity), mass);
+	sf::Vector2f friction;
 
 	if (objectStatic) {
 
-		friction = staticFrictionCoefficient * normalForce;
+		friction = calcFriction(normalForce, staticFrictionCoefficient);
 	}
 	else
 	{
-		friction = kineticFrictionCoefficient * normalForce;
+		friction = calcFriction(normalForce, kineticFrictionCoefficient);
 	}
 
-	float xVelocityNewton = (velocity.x * weight) - friction;
-	float yVelocityNewton = (velocity.y * weight) - friction;
+	addInstantForce(sf::Vector2f(-friction.x, -friction.y));
+}
 
-	if (xVelocityNewton > 0) {
-		xVelocityNewton = 0.f;
-	}
+sf::Vector2f PhysicsObject::convertVelocityToNewton(sf::Vector2f velocity, float mass) {
+	float xNewton = mass * velocity.x;
+	float yNewton = mass * velocity.y;
+	return sf::Vector2f(xNewton, yNewton);
+}
 
-	if (yVelocityNewton > 0) {
-		yVelocityNewton = 0.f;
-	}
+sf::Vector2f PhysicsObject::convertNewtonToVelocity(sf::Vector2f newton, float mass) {
+	float xVelocity = newton.x / mass;
+	float yVelocity = newton.y / mass;
+	return sf::Vector2f(xVelocity, yVelocity);
+}
 
-	addInstantForce(sf::Vector2f(xVelocityNewton / weight, yVelocityNewton / weight));
+sf::Vector2f PhysicsObject::calcFriction(sf::Vector2f normalForce, float frictionCoefficient) {
+	float xFriction = frictionCoefficient * normalForce.x;
+	float yFriction = frictionCoefficient * normalForce.y;
+	return sf::Vector2f(xFriction, yFriction);
 }
