@@ -2,8 +2,8 @@
 
 class Inputs {
 public:
-	void Update();
+	void update();
 
 private:
-	void PlayerInputs();
+	void playerInputs();
 };

@@ -8,6 +8,7 @@
 #include "Inputs.h"
 #include "Time.h"
 #include "PhysicsObject.h"
+#include "Player.h"
 
 using sf::RenderWindow;
 using sf::VideoMode;
@@ -32,7 +33,8 @@ void draw();
 RenderWindow* generateWindow();
 void windowEvents(RenderWindow* window, sf::Event event);
 PhysicsObject* getPhysicsObject(list<PhysicsObject*> currentList, int targetIndex);
-void addPhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, int mass, sf::Texture& texture);
+void addPhysicsObject(PhysicsObject* newObject);
+bool doesItCollide(sf::Vector2f collisionVector, PhysicsObject* otherObject);
 
 Inputs* inputs;
 Watenk::Time* watenkTime;
@@ -43,8 +45,9 @@ Texture* playerTexture;
 Texture* robotTexture;
 
 //Objects
-list<PhysicsObject*> enemys;
+list<PhysicsObject*> physicsObjects;
 int physicsObjectsIndex = 0;
+Player* player;
 
 //Text
 Font* oswaldRegular;
@@ -88,10 +91,12 @@ void start() {
     }
 
     //Objects
-    addPhysicsObject(sf::Vector2f(500, 500), sf::Vector2f(2, 2), sf::Vector2f(0, 0), sf::Vector2f(1, 1), 50, *robotTexture); // Player
+    player = new Player(sf::Vector2f(500, 500), sf::Vector2f(2, 2), sf::Vector2f(0, 0), sf::Vector2f(1, 1), 1.3f, 50.0f, *playerTexture, physicsObjectsIndex, true);
+    addPhysicsObject(player);
 
-
-    getPhysicsObject(enemys, 0)->addInstantForce(sf::Vector2f(15, 10));
+    //for (int i = 0; i < 20; i++) {
+    //    addPhysicsObject(new PhysicsObject(sf::Vector2f(700, 500), sf::Vector2f(2, 2), sf::Vector2f(0, 0), sf::Vector2f(1, 1), 50, *robotTexture, physicsObjectsIndex, false));
+    //}
 
     //text
     oswaldRegular = new Font();
@@ -108,8 +113,8 @@ void start() {
 
 void update() {
 
-    inputs->Update();
-    watenkTime->Update();
+    inputs->update();
+    watenkTime->update();
 
     //SFML Events
     sf::Event event;
@@ -130,8 +135,29 @@ void update() {
 
 void ups() {
     
-    for (list<PhysicsObject*>::iterator i = enemys.begin(); i != enemys.end(); i++) {
-        (*i)->ups();
+    for (list<PhysicsObject*>::iterator i = physicsObjects.begin(); i != physicsObjects.end(); i++) {
+        PhysicsObject* object1 = *i;
+        object1->ups();
+
+        for (list<PhysicsObject*>::iterator j = physicsObjects.begin(); j != physicsObjects.end(); j++) {
+            PhysicsObject* object2 = *j;
+
+            if (doesItCollide(object1->pos, object2)) {
+
+            }
+
+            if (doesItCollide(object1->pos2, object2)) {
+
+            }
+
+            if (doesItCollide(object1->pos3, object2)) {
+
+            }
+
+            if (doesItCollide(object1->pos4, object2)) {
+
+            }
+        }
     }
 }
 
@@ -148,8 +174,16 @@ void draw() {
     window->draw(fpsText);
 
     //Objects
-    for (list<PhysicsObject*>::iterator it = enemys.begin(); it != enemys.end(); it++) {
-        window->draw((*it)->sprite);
+    for (list<PhysicsObject*>::iterator it = physicsObjects.begin(); it != physicsObjects.end(); it++) {
+        PhysicsObject currentPhysicsObject = *(*it);
+
+        window->draw(currentPhysicsObject.sprite);
+        if (currentPhysicsObject.debug) {
+            window->draw(currentPhysicsObject.collisionRect1);
+            window->draw(currentPhysicsObject.collisionRect2);
+            window->draw(currentPhysicsObject.collisionRect3);
+            window->draw(currentPhysicsObject.collisionRect4);
+        }
     }
 
     // end the current frame
@@ -182,7 +216,7 @@ RenderWindow* generateWindow() {
 
 PhysicsObject* getPhysicsObject(list<PhysicsObject*> currentList, int targetIndex) {
 
-    for (list<PhysicsObject*>::iterator it = enemys.begin(); it != enemys.end(); it++) {
+    for (list<PhysicsObject*>::iterator it = physicsObjects.begin(); it != physicsObjects.end(); it++) {
         if ((*it)->getIndex() == targetIndex) {
             return *it;
         }
@@ -191,7 +225,14 @@ PhysicsObject* getPhysicsObject(list<PhysicsObject*> currentList, int targetInde
     return NULL;
 }
 
-void addPhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, int mass, sf::Texture& texture) {
-    enemys.push_back(new PhysicsObject(pos, size, colliderOffset, colliderSize, mass, texture, physicsObjectsIndex, false));
+void addPhysicsObject(PhysicsObject* newObject) {
+    physicsObjects.push_back(newObject);
     physicsObjectsIndex++;
+}
+
+bool doesItCollide(sf::Vector2f collisionVector, PhysicsObject* otherObject) {
+    if (collisionVector.x > otherObject->pos.x && collisionVector.y > otherObject->pos.y && collisionVector.x < otherObject->pos4.x && collisionVector.y < otherObject->pos4.y) {
+        return true;
+    }
+    return false;
 }

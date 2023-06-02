@@ -1,14 +1,13 @@
 #pragma once
 
-class Player {
-public:
-	Player(sf::Vector2f pos, sf::Texture& texture);
-	void Update();
-	void Move(sf::Vector2f direction);
+#include "PhysicsObject.h"
 
-	sf::Vector2f pos;
-	sf::Sprite sprite;
+class Player : public PhysicsObject {
+public:
+	Player(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, float accelerationSpeed, float mass, sf::Texture& texture, int index, bool debug);
+	void ups();
+	float accelerationSpeed;
 
 private:
-	sf::Texture texture;
+	void borderCollision();
 };

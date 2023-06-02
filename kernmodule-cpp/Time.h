@@ -4,7 +4,7 @@ namespace Watenk {
 	class Time {
 	public:
 		Time();
-		void Update();
+		void update();
 		float deltaTime = 0;
 		int frameTime = 0;
 		int frameRate = 0;

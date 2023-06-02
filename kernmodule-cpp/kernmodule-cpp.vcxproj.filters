@@ -1,60 +1,78 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{dc38937f-dd26-4352-86da-0f6ae69c7a47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Scripts\Managers">
+      <UniqueIdentifier>{7b0c1648-c2d3-4644-9873-cde15962b308}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Scripts\BaseClass">
+      <UniqueIdentifier>{e02f9643-5b1f-4b45-b0bc-bc38ea30415a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Other">
+      <UniqueIdentifier>{32eb3455-ef9b-4bc9-9b37-fb06931eb0e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\BaseClass\Derived BaseClass">
+      <UniqueIdentifier>{f80efbb5-e8c8-42d1-9b3a-c1dffa77c771}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\BaseClass\Derived BaseClass\Derived PhysicsObjects">
+      <UniqueIdentifier>{30647c72-f044-4d8c-8613-4ed7245a07e9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="Robot.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="BaseClass.cpp">
+      <Filter>Scripts\BaseClass</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSettings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Scripts\BaseClass\Derived BaseClass\Derived PhysicsObjects</Filter>
     </ClCompile>
     <ClCompile Include="Inputs.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Scripts\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Scripts\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Robot.cpp">
+      <Filter>Scripts\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Scripts\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSettings.cpp">
+      <Filter>Scripts\Managers</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsObject.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Scripts\BaseClass\Derived BaseClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Robot.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="BaseClass.h">
+      <Filter>Scripts\BaseClass</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
+      <Filter>Scripts\BaseClass\Derived BaseClass\Derived PhysicsObjects</Filter>
     </ClInclude>
     <ClInclude Include="GameSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>Header Files</Filter>
+      <Filter>Scripts\Managers</Filter>
     </ClInclude>
     <ClInclude Include="Inputs.h">
-      <Filter>Header Files</Filter>
+      <Filter>Scripts\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Scripts\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Robot.h">
+      <Filter>Scripts\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Scripts\Managers</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Scripts\BaseClass\Derived BaseClass</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

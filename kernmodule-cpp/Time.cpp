@@ -12,7 +12,7 @@ namespace Watenk {
         sf::Clock clock;
     }
 
-    void Time::Update() {
+    void Time::update() {
         int elapsedTime = (int)clock.getElapsedTime().asMicroseconds();
         frameTime = elapsedTime - previousFrame;
         frameRate = 1000000 / frameTime;

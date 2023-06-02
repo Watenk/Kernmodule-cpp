@@ -4,12 +4,20 @@
 
 #include "PhysicsObject.h"
 
-PhysicsObject::PhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, int mass, sf::Texture& texture, int index, bool debug)
+PhysicsObject::PhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, float mass, sf::Texture& texture, int index, bool debug)
 	: pos(pos), size(size), colliderOffset(colliderOffset), colliderSize(colliderSize), mass(mass), texture(texture), index(index), debug(debug), objectStatic(false){
 
 	sprite.setTexture(texture);
 	sprite.setScale(size.x, size.y);
 	sprite.setPosition(pos);
+
+	width = (float)texture.getSize().x * size.x;
+	height = (float)texture.getSize().y * size.y;
+
+	collisionRect1.setSize(sf::Vector2f(5, 5));
+	collisionRect2.setSize(sf::Vector2f(5, 5));
+	collisionRect3.setSize(sf::Vector2f(5, 5));
+	collisionRect4.setSize(sf::Vector2f(5, 5));
 }
 
 void PhysicsObject::ups() {
@@ -30,43 +38,81 @@ int PhysicsObject::getIndex() {
 
 void PhysicsObject::physics() {
 
+	friction();
+	collision();
+
 	//Is object Static
-	if (velocity.x >= -0.1 && velocity.x <= 0.1 && velocity.y >= -0.1 && velocity.y <= 0.1) {
-		velocity.x = 0.f;
-		velocity.y = 0.f;
+	if (velocity.x >= -staticTreshhold && velocity.x <= staticTreshhold && velocity.y >= -staticTreshhold && velocity.y <= staticTreshhold) {
+		velocity.x = 0.0f;
+		velocity.y = 0.0f;
 		objectStatic = true;
 	}
 	else {
 		objectStatic = false;
 	}
 
-	calcFriction();
-
-	std::cout << velocity.x << ", " << velocity.y << std::endl;
-
 	//Set new Pos
-	pos.x += velocity.x / mass;
-	pos.y += velocity.y / mass;
+	//std::cout << velocity.x << ", " << velocity.y << std::endl;
+	pos.x += velocity.x;
+	pos.y += velocity.y;
 }
 
-void PhysicsObject::calcFriction() {
-	// Friction
-	// staticFrictionCoefficient = initial friction force
-	// kineticFrictionCoefficient =  when a object already moves
+void PhysicsObject::friction() {
 
-	sf::Vector2f normalForce = convertVelocityToNewton(sf::Vector2f(gravity, gravity), mass);
-	sf::Vector2f friction;
+	sf::Vector2f groundFriction;
+	sf::Vector2f groundNormalForce = convertVelocityToNewton(sf::Vector2f(gravity, gravity), mass);
 
 	if (objectStatic) {
-
-		friction = calcFriction(normalForce, staticFrictionCoefficient);
+		groundFriction = convertNewtonToVelocity(calcFriction(groundNormalForce, staticFrictionCoefficient), mass);
 	}
 	else
 	{
-		friction = calcFriction(normalForce, kineticFrictionCoefficient);
+		groundFriction = convertNewtonToVelocity(calcFriction(groundNormalForce, kineticFrictionCoefficient), mass);
 	}
 
-	addInstantForce(sf::Vector2f(-friction.x, -friction.y));
+	if (velocity.x > 0) {
+		velocity.x -= groundFriction.x;
+		if (velocity.x < 0) {
+			velocity.x = 0.0f;
+		}
+	}
+	else {
+		velocity.x += groundFriction.x;
+		if (velocity.x > 0) {
+			velocity.x = 0.0f;
+		}
+	}
+
+	if (velocity.y > 0) {
+		velocity.y -= groundFriction.y;
+		if (velocity.y < 0) {
+			velocity.y = 0.0f;
+		}
+	}
+	else {
+		velocity.y += groundFriction.y;
+		if (velocity.y > 0) {
+			velocity.y = 0.0f;
+		}
+	}
+}
+
+void PhysicsObject::collision() {
+	pos2.x = pos.x + width;
+	pos2.y = pos.y;
+
+	pos3.x = pos.x;
+	pos3.y = pos.y + height;
+
+	pos4.x = pos.x + width;
+	pos4.y = pos.y + height;
+
+	if (debug) {
+		collisionRect1.setPosition(pos);
+		collisionRect2.setPosition(pos2);
+		collisionRect3.setPosition(pos3);
+		collisionRect4.setPosition(pos4);
+	}
 }
 
 sf::Vector2f PhysicsObject::convertVelocityToNewton(sf::Vector2f velocity, float mass) {
