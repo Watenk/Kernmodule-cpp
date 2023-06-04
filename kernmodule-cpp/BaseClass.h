@@ -6,4 +6,7 @@ public:
 	void start();
 	void update();
 	void ups();
+
+private:
+
 };

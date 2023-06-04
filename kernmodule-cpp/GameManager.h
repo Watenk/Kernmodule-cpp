@@ -8,9 +8,13 @@ using std::list;
 class GameManager {
 public:
 	GameManager();
-	void addBaseClass();
+	void update();
+	void ups();
+	void addBaseClass(BaseClass* newBaseClass);
 	void removeBaseClass();
 
 private:
+	void updateUps();
+
 	list<BaseClass*> baseClassObjects;
 };

@@ -131,24 +131,32 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseClass.cpp" />
+    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="Inputs.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="PhysicsObject.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Robot.cpp" />
-    <ClCompile Include="Time.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseClass.h" />
+    <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="Inputs.h" />
+    <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Robot.h" />
-    <ClInclude Include="Time.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="TimeManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
