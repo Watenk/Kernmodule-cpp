@@ -3,9 +3,9 @@
 class BaseClass {
 public:
 	BaseClass();
-	void start();
-	void update();
-	void ups();
+	virtual void start();
+	virtual void update();
+	virtual void ups();
 
 private:
 

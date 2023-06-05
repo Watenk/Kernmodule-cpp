@@ -19,9 +19,6 @@ using sf::Color;
 
 using std::cout;
 using std::endl;
-//using std::string;
-//using std::to_string;
-//using std::list;
 
 void mainStart();
 void mainUpdate();
@@ -33,9 +30,8 @@ void windowEvents(RenderWindow* window, sf::Event event);
 //bool doesItCollide(sf::Vector2f collisionVector, PhysicsObject* otherObject);
 
 //Inputs* inputs;
-//Watenk::Time* watenkTime;
 RenderWindow* window;
-GameManager gameManager;
+GameManager* gameManager;
 
 ////Textures
 //Texture* playerTexture;
@@ -45,16 +41,6 @@ GameManager gameManager;
 //list<PhysicsObject*> physicsObjects;
 //int physicsObjectsIndex = 0;
 //Player* player;
-
-////Text
-//Font* oswaldRegular;
-//Font* oswaldMedium;
-
-////FPS
-//int frameRate;
-//int previousFrame;
-//float deltaTime;
-//float UPSDeltaTime;
 
 int main()
 {
@@ -72,22 +58,8 @@ int main()
 void mainStart() {
 
     window = generateWindow();
-    gameManager = GameManager();
+    gameManager = new GameManager(window);
     //inputs = new Inputs();
-    //watenkTime = new Watenk::Time;
-
-    ////textures
-    //playerTexture = new Texture();
-    //if (!playerTexture->loadFromFile("Textures/player.png"))
-    //{
-    //    cout << "Textures/player.png missing!" << endl;
-    //}
-
-    //robotTexture = new Texture();
-    //if (!robotTexture->loadFromFile("Textures/robot.png"))
-    //{
-    //    cout << "Textures/robot.png missing!" << endl;
-    //}
 
     ////Objects
     //player = new Player(sf::Vector2f(500, 500), sf::Vector2f(2, 2), sf::Vector2f(0, 0), sf::Vector2f(1, 1), 1.3f, 50.0f, *playerTexture, physicsObjectsIndex, true);
@@ -96,24 +68,11 @@ void mainStart() {
     ////for (int i = 0; i < 20; i++) {
     ////    addPhysicsObject(new PhysicsObject(sf::Vector2f(700, 500), sf::Vector2f(2, 2), sf::Vector2f(0, 0), sf::Vector2f(1, 1), 50, *robotTexture, physicsObjectsIndex, false));
     ////}
-
-    ////text
-    //oswaldRegular = new Font();
-    //if (!oswaldRegular->loadFromFile("Fonts/oswaldRegular.ttf"))
-    //{
-    //    cout << "Fonts/oswaldRegular.ttf missing!" << endl;
-    //}
-    //oswaldMedium = new Font();
-    //if (!oswaldMedium->loadFromFile("Fonts/oswaldMedium.ttf"))
-    //{
-    //    cout << "Fonts/oswaldMedium.ttf missing!" << endl;
-    //}
 }
 
 void mainUpdate() {
 
     //inputs->update();
-    //watenkTime->update();
 
     //SFML Events
     sf::Event event;
@@ -121,12 +80,11 @@ void mainUpdate() {
     {
         windowEvents(window, event);
     }
-    
-    gameManager.update();
-
-
 
     window->clear(Color::Black);
+    
+    gameManager->update();
+
     window->display();
 }
 
@@ -163,11 +121,7 @@ void mainUps() {
 
     ////Text
     //Text fpsText;
-    //fpsText.setFont(*oswaldRegular);
-    //fpsText.setString(to_string(watenkTime->frameRate));
-    //fpsText.setCharacterSize(15);
-    //fpsText.setFillColor(Color::White);
-    //window->draw(fpsText);
+
 
     ////Objects
     //for (list<PhysicsObject*>::iterator it = physicsObjects.begin(); it != physicsObjects.end(); it++) {
@@ -201,8 +155,7 @@ void windowEvents(RenderWindow* window, sf::Event event) {
 }
 
 RenderWindow* generateWindow() {
-    sf::RenderWindow* window;
-    window = new RenderWindow(VideoMode(screenWidth, screenHeight), windowName, sf::Style::Fullscreen);
+    sf::RenderWindow* window = new RenderWindow(VideoMode(screenWidth, screenHeight), windowName, sf::Style::Fullscreen);
     cout << "Opening Window" << endl;
     window->setFramerateLimit(targetFrameRate);
 
@@ -219,7 +172,7 @@ RenderWindow* generateWindow() {
 //
 //    return NULL;
 //}
-//
+
 //void addPhysicsObject(PhysicsObject* newObject) {
 //    physicsObjects.push_back(newObject);
 //    physicsObjectsIndex++;

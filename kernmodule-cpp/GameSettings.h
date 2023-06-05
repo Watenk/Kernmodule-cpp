@@ -2,9 +2,9 @@
 
 using std::string;
 
-extern int screenWidth;
-extern int screenHeight;
-extern string windowName;
-extern int targetFrameRate;
-extern float UPSSpeed;
-extern int playerSpeed;
+const int screenWidth = 2560;
+const int screenHeight = 1440;
+const string windowName = "SFML";
+const int targetFrameRate = 144;
+const float UPSSpeed = 60;
+const int playerSpeed = 5;

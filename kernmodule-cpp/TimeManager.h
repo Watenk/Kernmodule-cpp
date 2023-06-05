@@ -1,8 +1,11 @@
 #pragma once
 
-class TimeManager {
+#include <SFML/Graphics.hpp>
+
+#include "BaseClass.h"
+
+class TimeManager : public BaseClass {
 public:
-	TimeManager();
 	void update();
 	float deltaTime = 0;
 	int frameTime = 0;

@@ -1,18 +1,11 @@
 
-#include <iostream>
-#include <SFML/Graphics.hpp>
-
 #include "TimeManager.h"
 #include "GameSettings.h"
 
-using std::cout;
-
-TimeManager::TimeManager() {
-    sf::Clock clock;
-}
+sf::Clock sfClock;
 
 void TimeManager::update() {
-    int elapsedTime = (int)clock.getElapsedTime().asMicroseconds();
+    int elapsedTime = (int)sfClock.getElapsedTime().asMicroseconds();
     frameTime = elapsedTime - previousFrame;
     frameRate = 1000000 / frameTime;
     previousFrame = elapsedTime;

@@ -1,12 +1,12 @@
 
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include <cstdlib>
-
-#include "GameSettings.h"
-#include "Inputs.h"
-#include "Player.h"
-#include "Time.h"
+//#include <iostream>
+//#include <SFML/Graphics.hpp>
+//#include <cstdlib>
+//
+//#include "GameSettings.h"
+//#include "Inputs.h"
+//#include "Player.h"
+//#include "Time.h"
 //
 //extern Player* player;
 //extern Watenk::Time* watenkTime;
