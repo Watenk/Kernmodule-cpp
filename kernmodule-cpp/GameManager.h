@@ -22,18 +22,20 @@ public:
 	void addBaseClass(BaseClass* newBaseClass);
 	void removeBaseClass(BaseClass* newBaseClass);
 
+	sf::RenderWindow* window;
+	FontManager* fontManager;
+	TextureManager* textureManager;
+	TimeManager* timeManager;
+
 private:
 	void draw();
 	void updateUps();
 	sf::Text getFpsText();
 
 	list<BaseClass*> baseClassList;
-	sf::RenderWindow* window;
-	FontManager* fontManager;
 	Inputs* inputs;
 	PhysicsManager* physicsManager;
-	TextureManager* textureManager;
-	TimeManager* timeManager;
+	SceneManager* sceneManager;
 
 	float upsDeltaTime = 0;
 };

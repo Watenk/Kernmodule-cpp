@@ -1,9 +1,12 @@
 #pragma once
 
-class Inputs {
-//public:
-//	void update();
-//
-//private:
-//	void playerInputs();
+#include "Player.h"
+
+class Inputs : public BaseClass {
+public:
+	Inputs();
+	void playerInputs(Player* player);
+
+private:
+
 };

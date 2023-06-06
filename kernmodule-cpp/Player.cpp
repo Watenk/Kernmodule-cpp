@@ -2,11 +2,17 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include "GameSettings.h"
+#include "GameData.h"
 #include "Player.h"
+#include "GameManager.h"
 
-Player::Player(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, float accelerationSpeed, float mass, sf::Texture& texture, int index, bool debug) : PhysicsObject(pos, size, colliderOffset, colliderSize, mass, texture, index, debug), accelerationSpeed(accelerationSpeed) {
+Player::Player(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, float accelerationSpeed, float mass, sf::Texture& texture, int index, bool debug) 
+	: PhysicsObject(pos, size, colliderOffset, colliderSize, mass, texture, index, debug), accelerationSpeed(accelerationSpeed) {
 
+}
+
+void Player::update() {
+	PhysicsObject::update();
 }
 
 void Player::ups() {

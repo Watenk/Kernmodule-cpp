@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "PhysicsObject.h"
+#include "GameData.h"
+#include "GameManager.h"
 
 PhysicsObject::PhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, float mass, sf::Texture& texture, int index, bool debug)
 	: pos(pos), size(size), colliderOffset(colliderOffset), colliderSize(colliderSize), mass(mass), texture(texture), index(index), debug(debug), objectStatic(false){
@@ -20,11 +22,14 @@ PhysicsObject::PhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f c
 	collisionRect4.setSize(sf::Vector2f(5, 5));
 }
 
+void PhysicsObject::update() {
+	sprite.setPosition(pos);
+	gameManager->window->draw(sprite);
+}
+
 void PhysicsObject::ups() {
 
 	physics();
-
-	sprite.setPosition(pos);
 }
 
 void PhysicsObject::addInstantForce(sf::Vector2f extraVelocity) {

@@ -1,6 +1,6 @@
 
 #include "TimeManager.h"
-#include "GameSettings.h"
+#include "GameData.h"
 
 sf::Clock sfClock;
 

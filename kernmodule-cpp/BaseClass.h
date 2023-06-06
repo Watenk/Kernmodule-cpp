@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
 class BaseClass {
 public:
 	BaseClass();

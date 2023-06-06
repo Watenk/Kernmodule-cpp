@@ -50,7 +50,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameSettings.h">
+    <ClInclude Include="GameData.h">
       <Filter>Scripts\Managers</Filter>
     </ClInclude>
     <ClInclude Include="Inputs.h">
