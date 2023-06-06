@@ -34,7 +34,7 @@ void SceneManager::loadMainMenu() {
 void SceneManager::loadLvl01() {
 	std::cout << "Loading Lvl01" << std::endl;
 
-	Player* player = new Player(gameManager, sf::Vector2f(500, 500), sf::Vector2f(2, 2), sf::Vector2f(0, 0), sf::Vector2f(1, 1), 1.3f, 50.0f, *gameManager->textureManager->playerTexture, 0, true);
+	Player* player = new Player(gameManager, watenk::Vector2(500, 500), watenk::Vector2(2, 2), watenk::Vector2(0, 0), watenk::Vector2(1, 1), 1.3f, 50.0f, *gameManager->textureManager->playerTexture, 0, true);
 	gameManager->addBaseClass(player);
 	gameManager->inputs->setPlayer(player);
 }

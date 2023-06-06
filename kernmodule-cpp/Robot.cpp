@@ -6,7 +6,7 @@
 #include "GlobalData.h"
 #include "Robot.h"
 
-Robot::Robot(sf::Vector2f pos, sf::Texture& texture) : pos(pos) {
+Robot::Robot(watenk::Vector2 pos, sf::Texture& texture) : pos(pos) {
 	sprite.setTexture(texture);
 	sprite.setScale(2, 2);
 	velocity.x = (float)GetRandom(-3, 3);

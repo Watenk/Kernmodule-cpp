@@ -109,7 +109,7 @@ sf::Text GameManager::getFpsText() {
 //    physicsObjectsIndex++;
 //}
 
-//bool doesItCollide(sf::Vector2f collisionVector, PhysicsObject* otherObject) {
+//bool doesItCollide(watenk::Vector2 collisionVector, PhysicsObject* otherObject) {
 //    if (collisionVector.x > otherObject->pos.x && collisionVector.y > otherObject->pos.y && collisionVector.x < otherObject->pos4.x && collisionVector.y < otherObject->pos4.y) {
 //        return true;
 //    }

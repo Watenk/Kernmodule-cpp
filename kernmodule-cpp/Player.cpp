@@ -6,7 +6,7 @@
 #include "Player.h"
 #include "GameManager.h"
 
-Player::Player(GameManager* gameManager, sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, float accelerationSpeed, float mass, sf::Texture& texture, int index, bool debug) 
+Player::Player(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderOffset, watenk::Vector2 colliderSize, float accelerationSpeed, float mass, sf::Texture& texture, int index, bool debug) 
 	: PhysicsObject(gameManager, pos, size, colliderOffset, colliderSize, mass, texture, index, debug), accelerationSpeed(accelerationSpeed) {
 
 }

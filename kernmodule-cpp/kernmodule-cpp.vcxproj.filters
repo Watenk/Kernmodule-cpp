@@ -48,6 +48,9 @@
     <ClCompile Include="BaseClass.cpp">
       <Filter>Scripts\Other</Filter>
     </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Scripts\Other</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GlobalData.h">
@@ -84,6 +87,9 @@
       <Filter>Scripts\Other</Filter>
     </ClInclude>
     <ClInclude Include="BaseClass.h">
+      <Filter>Scripts\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
       <Filter>Scripts\Other</Filter>
     </ClInclude>
   </ItemGroup>

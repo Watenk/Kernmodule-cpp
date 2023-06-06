@@ -8,7 +8,7 @@
 
 extern GameManager* gameManager;
 
-PhysicsObject::PhysicsObject(GameManager* gameManager, sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, float mass, sf::Texture& texture, int index, bool debug)
+PhysicsObject::PhysicsObject(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderOffset, watenk::Vector2 colliderSize, float mass, sf::Texture& texture, int index, bool debug)
 	: gameManager(gameManager), pos(pos), size(size), colliderOffset(colliderOffset), colliderSize(colliderSize), mass(mass), texture(texture), index(index), debug(debug), objectStatic(false){
 
 	sprite.setTexture(texture);
@@ -18,10 +18,10 @@ PhysicsObject::PhysicsObject(GameManager* gameManager, sf::Vector2f pos, sf::Vec
 	width = (float)texture.getSize().x * size.x;
 	height = (float)texture.getSize().y * size.y;
 
-	collisionRect1.setSize(sf::Vector2f(5, 5));
-	collisionRect2.setSize(sf::Vector2f(5, 5));
-	collisionRect3.setSize(sf::Vector2f(5, 5));
-	collisionRect4.setSize(sf::Vector2f(5, 5));
+	collisionRect1.setSize(watenk::Vector2(5, 5));
+	collisionRect2.setSize(watenk::Vector2(5, 5));
+	collisionRect3.setSize(watenk::Vector2(5, 5));
+	collisionRect4.setSize(watenk::Vector2(5, 5));
 }
 
 void PhysicsObject::update() {
@@ -34,7 +34,7 @@ void PhysicsObject::ups() {
 	physics();
 }
 
-void PhysicsObject::addInstantForce(sf::Vector2f extraVelocity) {
+void PhysicsObject::addInstantForce(watenk::Vector2 extraVelocity) {
 	velocity.x += extraVelocity.x;
 	velocity.y += extraVelocity.y;
 }
@@ -66,8 +66,8 @@ void PhysicsObject::physics() {
 
 void PhysicsObject::friction() {
 
-	sf::Vector2f groundFriction;
-	sf::Vector2f groundNormalForce = convertVelocityToNewton(sf::Vector2f(gravity, gravity), mass);
+	watenk::Vector2 groundFriction;
+	watenk::Vector2 groundNormalForce = convertVelocityToNewton(watenk::Vector2(gravity, gravity), mass);
 
 	if (objectStatic) {
 		groundFriction = convertNewtonToVelocity(calcFriction(groundNormalForce, staticFrictionCoefficient), mass);
@@ -122,20 +122,20 @@ void PhysicsObject::collision() {
 	}
 }
 
-sf::Vector2f PhysicsObject::convertVelocityToNewton(sf::Vector2f velocity, float mass) {
+watenk::Vector2 PhysicsObject::convertVelocityToNewton(watenk::Vector2 velocity, float mass) {
 	float xNewton = mass * velocity.x;
 	float yNewton = mass * velocity.y;
-	return sf::Vector2f(xNewton, yNewton);
+	return watenk::Vector2(xNewton, yNewton);
 }
 
-sf::Vector2f PhysicsObject::convertNewtonToVelocity(sf::Vector2f newton, float mass) {
+watenk::Vector2 PhysicsObject::convertNewtonToVelocity(watenk::Vector2 newton, float mass) {
 	float xVelocity = newton.x / mass;
 	float yVelocity = newton.y / mass;
-	return sf::Vector2f(xVelocity, yVelocity);
+	return watenk::Vector2(xVelocity, yVelocity);
 }
 
-sf::Vector2f PhysicsObject::calcFriction(sf::Vector2f normalForce, float frictionCoefficient) {
+watenk::Vector2 PhysicsObject::calcFriction(watenk::Vector2 normalForce, float frictionCoefficient) {
 	float xFriction = frictionCoefficient * normalForce.x;
 	float yFriction = frictionCoefficient * normalForce.y;
-	return sf::Vector2f(xFriction, yFriction);
+	return watenk::Vector2(xFriction, yFriction);
 }
