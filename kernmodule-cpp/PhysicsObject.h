@@ -7,7 +7,7 @@ class GameManager;
 class PhysicsObject : public BaseClass {
 
 public:
-	PhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, float mass, sf::Texture& texture, int index, bool debug);
+	PhysicsObject(GameManager* gamemanager, sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, float mass, sf::Texture& texture, int index, bool debug);
 	virtual void update() override;
 	virtual void ups() override;
 	void addInstantForce(sf::Vector2f newVelocity);
@@ -50,4 +50,6 @@ protected:
 	sf::Vector2f velocity;
 	float width;
 	float height;
+
+	GameManager* gameManager;
 };

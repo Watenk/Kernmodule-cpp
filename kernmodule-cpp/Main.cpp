@@ -4,7 +4,7 @@
 #include <string>
 #include <list>
 
-#include "GameData.h"
+#include "GlobalData.h"
 #include "GameManager.h"
 
 using sf::RenderWindow;
@@ -20,6 +20,7 @@ void mainUpdate();
 RenderWindow* generateWindow();
 void windowEvents(RenderWindow* window, sf::Event event);
 
+GameManager* gameManager;
 RenderWindow* window;
 
 int main()

@@ -2,7 +2,6 @@
 #include <iostream>
 
 #include "GameManager.h"
-#include "GameData.h"
 
 using std::to_string;
 
@@ -10,8 +9,8 @@ GameManager::GameManager(sf::RenderWindow* window) : window(window) {
 
 	//Initialize Managers
 	fontManager = new FontManager();
-	inputs = new Inputs();
-	sceneManager = new SceneManager();
+	inputs = new Inputs(this);
+	sceneManager = new SceneManager(this);
 	textureManager = new TextureManager();
 	timeManager = new TimeManager();
 

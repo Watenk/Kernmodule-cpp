@@ -147,7 +147,7 @@
     <ClInclude Include="BaseClass.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="GameData.h" />
+    <ClInclude Include="GlobalData.h" />
     <ClInclude Include="Inputs.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="PhysicsObject.h" />

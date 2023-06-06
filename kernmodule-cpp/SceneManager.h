@@ -8,7 +8,7 @@ using std::string;
 
 class SceneManager {
 public:
-	SceneManager();
+	SceneManager(GameManager* gameManager);
 	void switchScene(string scene);
 	
 	string currentScene;
@@ -16,7 +16,8 @@ public:
 private:
 	void loadScene(string scene);
 	void unloadScene(string scene);
-
+	void loadMainMenu();
 	void loadLvl01();
 
+	GameManager* gameManager;
 };

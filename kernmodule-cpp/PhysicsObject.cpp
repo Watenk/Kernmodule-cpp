@@ -3,11 +3,13 @@
 #include <SFML/Graphics.hpp>
 
 #include "PhysicsObject.h"
-#include "GameData.h"
+#include "GlobalData.h"
 #include "GameManager.h"
 
-PhysicsObject::PhysicsObject(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, float mass, sf::Texture& texture, int index, bool debug)
-	: pos(pos), size(size), colliderOffset(colliderOffset), colliderSize(colliderSize), mass(mass), texture(texture), index(index), debug(debug), objectStatic(false){
+extern GameManager* gameManager;
+
+PhysicsObject::PhysicsObject(GameManager* gameManager, sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, float mass, sf::Texture& texture, int index, bool debug)
+	: gameManager(gameManager), pos(pos), size(size), colliderOffset(colliderOffset), colliderSize(colliderSize), mass(mass), texture(texture), index(index), debug(debug), objectStatic(false){
 
 	sprite.setTexture(texture);
 	sprite.setScale(size.x, size.y);

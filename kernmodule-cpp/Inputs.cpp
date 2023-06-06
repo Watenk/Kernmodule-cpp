@@ -3,17 +3,27 @@
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
 
-#include "GameData.h"
 #include "GameManager.h"
 #include "Inputs.h"
 #include "TimeManager.h"
 
-Inputs::Inputs() {
+Inputs::Inputs(GameManager* gameManager) : gameManager(gameManager), player(NULL) {
 
 }
 
-void Inputs::playerInputs(Player* player) {
+void Inputs::update() {
 
+    if (player != NULL) {
+        playerInputs();
+    }
+}
+
+void Inputs::setPlayer(Player* newPlayer) {
+    player = newPlayer;
+}
+
+void Inputs::playerInputs() {
+ 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
         player->addInstantForce(sf::Vector2f(0, -player->accelerationSpeed * gameManager->timeManager->deltaTime));

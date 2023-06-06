@@ -4,10 +4,10 @@
 
 #include "SceneManager.h"
 #include "GameManager.h"
-#include "GameData.h"
+#include "GlobalData.h"
 #include "Player.h"
 
-SceneManager::SceneManager() {
+SceneManager::SceneManager(GameManager* gameManager) : gameManager(gameManager) {
 
 }
 
@@ -27,7 +27,14 @@ void SceneManager::unloadScene(string scene) {
 
 }
 
+void SceneManager::loadMainMenu() {
+
+}
+
 void SceneManager::loadLvl01() {
 	std::cout << "Loading Lvl01" << std::endl;
-	gameManager->addBaseClass(new Player(sf::Vector2f(500, 500), sf::Vector2f(2, 2), sf::Vector2f(0, 0), sf::Vector2f(1, 1), 1.3f, 50.0f, *gameManager->textureManager->playerTexture, 0, true));
+
+	Player* player = new Player(gameManager, sf::Vector2f(500, 500), sf::Vector2f(2, 2), sf::Vector2f(0, 0), sf::Vector2f(1, 1), 1.3f, 50.0f, *gameManager->textureManager->playerTexture, 0, true);
+	gameManager->addBaseClass(player);
+	gameManager->inputs->setPlayer(player);
 }

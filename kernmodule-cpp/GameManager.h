@@ -23,6 +23,7 @@ public:
 	void removeBaseClass(BaseClass* newBaseClass);
 
 	sf::RenderWindow* window;
+	Inputs* inputs;
 	FontManager* fontManager;
 	TextureManager* textureManager;
 	TimeManager* timeManager;
@@ -33,7 +34,6 @@ private:
 	sf::Text getFpsText();
 
 	list<BaseClass*> baseClassList;
-	Inputs* inputs;
 	PhysicsManager* physicsManager;
 	SceneManager* sceneManager;
 

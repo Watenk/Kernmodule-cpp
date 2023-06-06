@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <random>
 
-#include "GameData.h"
+#include "GlobalData.h"
 #include "Robot.h"
 
 Robot::Robot(sf::Vector2f pos, sf::Texture& texture) : pos(pos) {
