@@ -2,25 +2,27 @@
 
 #include "BaseClass.h"
 
+#include "Vector2.h"
+
 class GameManager;
 
 class PhysicsObject : public BaseClass {
 
 public:
-	PhysicsObject(GameManager* gamemanager, sf::Vector2f pos, sf::Vector2f size, sf::Vector2f colliderOffset, sf::Vector2f colliderSize, float mass, sf::Texture& texture, int index, bool debug);
+	PhysicsObject(GameManager* gamemanager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderOffset, watenk::Vector2 colliderSize, float mass, sf::Texture& texture, int index, bool debug);
 	virtual void update() override;
 	virtual void ups() override;
-	void addInstantForce(sf::Vector2f newVelocity);
+	void addInstantForce(watenk::Vector2 newVelocity);
 	int getIndex();
 
 	int index;
-	sf::Vector2f pos;
-	sf::Vector2f pos2; // top right
-	sf::Vector2f pos3; // bottom left
-	sf::Vector2f pos4; // bottom right
-	sf::Vector2f size;
-	sf::Vector2f colliderOffset;
-	sf::Vector2f colliderSize;
+	watenk::Vector2 pos;
+	watenk::Vector2 pos2; // top right
+	watenk::Vector2 pos3; // bottom left
+	watenk::Vector2 pos4; // bottom right
+	watenk::Vector2 size;
+	watenk::Vector2 colliderOffset;
+	watenk::Vector2 colliderSize;
 	sf::Sprite sprite;
 	float mass;
 	bool objectStatic;
@@ -42,12 +44,12 @@ protected:
 	void physics();
 	void friction();
 	void collision();
-	sf::Vector2f convertNewtonToVelocity(sf::Vector2f newton, float mass);
-	sf::Vector2f convertVelocityToNewton(sf::Vector2f velocity, float mass);
-	sf::Vector2f calcFriction(sf::Vector2f normalForce, float frictionCoefficient);
+	watenk::Vector2 convertNewtonToVelocity(watenk::Vector2 newton, float mass);
+	watenk::Vector2 convertVelocityToNewton(watenk::Vector2 velocity, float mass);
+	watenk::Vector2 calcFriction(watenk::Vector2 normalForce, float frictionCoefficient);
 
 	sf::Texture texture;
-	sf::Vector2f velocity;
+	watenk::Vector2 velocity;
 	float width;
 	float height;
 
