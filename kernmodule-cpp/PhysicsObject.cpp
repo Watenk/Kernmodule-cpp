@@ -13,19 +13,19 @@ PhysicsObject::PhysicsObject(GameManager* gameManager, watenk::Vector2 pos, wate
 
 	sprite.setTexture(texture);
 	sprite.setScale(size.x, size.y);
-	sprite.setPosition(pos);
+	sprite.setPosition(pos.convertToSFML());
 
 	width = (float)texture.getSize().x * size.x;
 	height = (float)texture.getSize().y * size.y;
 
-	collisionRect1.setSize(watenk::Vector2(5, 5));
-	collisionRect2.setSize(watenk::Vector2(5, 5));
-	collisionRect3.setSize(watenk::Vector2(5, 5));
-	collisionRect4.setSize(watenk::Vector2(5, 5));
+	collisionRect1.setSize(watenk::Vector2(5, 5).convertToSFML());
+	collisionRect2.setSize(watenk::Vector2(5, 5).convertToSFML());
+	collisionRect3.setSize(watenk::Vector2(5, 5).convertToSFML());
+	collisionRect4.setSize(watenk::Vector2(5, 5).convertToSFML());
 }
 
 void PhysicsObject::update() {
-	sprite.setPosition(pos);
+	sprite.setPosition(pos.convertToSFML());
 	gameManager->window->draw(sprite);
 }
 
@@ -115,10 +115,10 @@ void PhysicsObject::collision() {
 	pos4.y = pos.y + height;
 
 	if (debug) {
-		collisionRect1.setPosition(pos);
-		collisionRect2.setPosition(pos2);
-		collisionRect3.setPosition(pos3);
-		collisionRect4.setPosition(pos4);
+		collisionRect1.setPosition(pos.convertToSFML());
+		collisionRect2.setPosition(pos2.convertToSFML());
+		collisionRect3.setPosition(pos3.convertToSFML());
+		collisionRect4.setPosition(pos4.convertToSFML());
 	}
 }
 

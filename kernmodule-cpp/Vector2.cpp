@@ -1,4 +1,6 @@
 
+#include <SFML/Graphics.hpp>
+
 #include "Vector2.h"
 
 namespace watenk {
@@ -9,6 +11,10 @@ namespace watenk {
 
 	Vector2::Vector2(float newX, float newY) : x(newX), y(newY) {
 
+	}
+
+	sf::Vector2f Vector2::convertToSFML() {
+		return sf::Vector2f(x, y);
 	}
 
 	//Operator Overloading

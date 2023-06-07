@@ -2,6 +2,8 @@
 
 #include "BaseClass.h"
 
+#include "Vector2.h"
+
 class GameManager;
 
 class PhysicsObject : public BaseClass {

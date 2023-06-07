@@ -5,6 +5,7 @@ namespace watenk {
 	public:
 		Vector2();
 		Vector2(float x, float y);
+		sf::Vector2f convertToSFML();
 
 		float x;
 		float y;
