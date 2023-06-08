@@ -13,5 +13,7 @@ public:
 private:
 	void playerInputs();
 
+	float bulletDelayTimer = 0;
+
 	GameManager* gameManager;
 };

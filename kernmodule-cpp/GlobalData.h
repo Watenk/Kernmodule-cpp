@@ -5,7 +5,7 @@
 using std::string;
 
 //Dev
-const bool debug = true;
+const bool debug = false;
 const float UPSSpeed = 60; //Physics Update Speed in frames
 
 //WindowSettings
@@ -15,7 +15,9 @@ const string windowName = "SFML";
 const int targetFrameRate = 144;
 
 //Player
-const int playerSpeed = 65; //Newton
+const int playerSpeed = 65;
+const float bulletSpeed = 10; 
+const float bulletDelay = 10;
 
 //Friction
 const float gravity = 9.8f;
