@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
 
+#include "GlobalData.h"
 #include "GameManager.h"
 #include "Inputs.h"
 #include "TimeManager.h"
@@ -26,23 +27,23 @@ void Inputs::playerInputs() {
  
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        player->addInstantForce(watenk::Vector2(0, -player->accelerationSpeed * gameManager->timeManager->deltaTime));
+        player->addInstantForce(watenk::Vector2(0, -playerSpeed * gameManager->timeManager->deltaTime));
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        player->addInstantForce(watenk::Vector2(player->accelerationSpeed * gameManager->timeManager->deltaTime, 0));
+        player->addInstantForce(watenk::Vector2(playerSpeed * gameManager->timeManager->deltaTime, 0));
 
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        player->addInstantForce(watenk::Vector2(0, player->accelerationSpeed * gameManager->timeManager->deltaTime));
+        player->addInstantForce(watenk::Vector2(0, playerSpeed * gameManager->timeManager->deltaTime));
 
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        player->addInstantForce(watenk::Vector2(-player->accelerationSpeed * gameManager->timeManager->deltaTime, 0));
+        player->addInstantForce(watenk::Vector2(-playerSpeed * gameManager->timeManager->deltaTime, 0));
     }
 }

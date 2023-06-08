@@ -4,6 +4,7 @@
 #include "CollisionManager.h"
 
 #include "GameManager.h"
+#include "GlobalData.h"
 
 CollisionManager::CollisionManager(GameManager* gameManager) : gameManager(gameManager) {
 	
@@ -17,7 +18,7 @@ void CollisionManager::ups() {
 		for (list<PhysicsObject*>::iterator it2 = gameManager->physicsObjectList.begin(); it2 != gameManager->physicsObjectList.end(); it2++) {
 			PhysicsObject* object2 = *it2;
 
-			if (getDistance(object1, object2) < 100 && object1 != object2 && !listContains(object1) && !listContains(object2)) {
+			if (getDistance(object1, object2) < minCollisionDistance && object1 != object2 && !listContains(object1) && !listContains(object2)) {
 
 				if (checkCollision(object1, object2)) {
 
@@ -70,31 +71,29 @@ void CollisionManager::doCollision(PhysicsObject* object1, PhysicsObject* object
 		currentObject = object2;
 		otherObject = object1;
 	}
+	
+	float totalXVelocity = currentObject->velocity.x + otherObject->velocity.x;
+	float totalYVelocity = currentObject->velocity.y + otherObject->velocity.y;
 
-	if (abs(object1->velocity.x) + abs(object1->velocity.y) > 1) {
-		//Velocity
-		currentObject->velocity.x = (currentObject->velocity.x + otherObject->velocity.x) / 2.0f;
-		currentObject->velocity.y = (currentObject->velocity.y + otherObject->velocity.y) / 2.0f;
+	//Velocity
+	currentObject->removeInstantForce(watenk::Vector2((totalXVelocity * (collisionForceTransfer / 100)) * currentObject->mass, (totalYVelocity * (collisionForceTransfer / 100)) * currentObject->mass));
+	otherObject->addInstantForce(watenk::Vector2((totalXVelocity * (collisionForceTransfer / 100)) * otherObject->mass, (totalYVelocity * (collisionForceTransfer / 100)) * otherObject->mass));
 
-		otherObject->velocity.x = (currentObject->velocity.x + otherObject->velocity.x) / 2.0f;
-		otherObject->velocity.y = (currentObject->velocity.y + otherObject->velocity.y) / 2.0f;
-
-		//Pos
-		if (abs(currentObject->velocity.x) > abs(currentObject->velocity.y)) {
-			if (currentObject->velocity.x > 0) {
-				otherObject->pos.x = currentObject->pos.x + currentObject->colliderSize.x + otherObject->colliderSize.x;
-			}
-			else if (currentObject->velocity.x < 0) {
-				otherObject->pos.x = currentObject->pos.x - currentObject->colliderSize.x - otherObject->colliderSize.x;
-			}
+	//Pos
+	if (abs(currentObject->velocity.x) > abs(currentObject->velocity.y)) {
+		if (currentObject->velocity.x > 0) {
+			otherObject->pos.x = currentObject->pos.x + currentObject->colliderSize.x + otherObject->colliderSize.x + collisionExtraDistance;
 		}
-		else {
-			if (currentObject->velocity.y > 0) {
-				otherObject->pos.y = currentObject->pos.y + currentObject->colliderSize.y + otherObject->colliderSize.y;
-			}
-			else if (currentObject->velocity.y < 0) {
-				otherObject->pos.y = currentObject->pos.y - currentObject->colliderSize.y - otherObject->colliderSize.y;
-			}
+		else if (currentObject->velocity.x < 0) {
+			otherObject->pos.x = currentObject->pos.x - currentObject->colliderSize.x - otherObject->colliderSize.x - collisionExtraDistance;
+		}
+	}
+	else {
+		if (currentObject->velocity.y > 0) {
+			otherObject->pos.y = currentObject->pos.y + currentObject->colliderSize.y + otherObject->colliderSize.y + collisionExtraDistance;
+		}
+		else if (currentObject->velocity.y < 0) {
+			otherObject->pos.y = currentObject->pos.y - currentObject->colliderSize.y - otherObject->colliderSize.y - collisionExtraDistance;
 		}
 	}
 }

@@ -56,9 +56,14 @@ void PhysicsObject::ups() {
 	pos.y += velocity.y;
 }
 
-void PhysicsObject::addInstantForce(watenk::Vector2 extraVelocity) {
-	velocity.x += extraVelocity.x;
-	velocity.y += extraVelocity.y;
+void PhysicsObject::addInstantForce(watenk::Vector2 extraNewton) {
+	velocity.x += extraNewton.x / mass;
+	velocity.y += extraNewton.y / mass;
+}
+
+void PhysicsObject::removeInstantForce(watenk::Vector2 removedNewton) {
+	velocity.x -= removedNewton.x / mass;
+	velocity.y -= removedNewton.y / mass;
 }
 
 int PhysicsObject::getIndex() {
@@ -67,38 +72,38 @@ int PhysicsObject::getIndex() {
 
 void PhysicsObject::friction() {
 
-	watenk::Vector2 groundFriction;
-	watenk::Vector2 groundNormalForce = convertVelocityToNewton(watenk::Vector2(gravity, gravity), mass);
+	float groundFriction;
+	float groundNormalForce = gravity * mass;
 
 	if (objectStatic) {
-		groundFriction = convertNewtonToVelocity(calcFriction(groundNormalForce, staticFrictionCoefficient), mass);
+		groundFriction = groundNormalForce * staticFrictionCoefficient * (mass * massImpact);
 	}
 	else
 	{
-		groundFriction = convertNewtonToVelocity(calcFriction(groundNormalForce, kineticFrictionCoefficient), mass);
+		groundFriction = groundNormalForce * kineticFrictionCoefficient * (mass * massImpact);
 	}
 
 	if (velocity.x > 0) {
-		velocity.x -= groundFriction.x;
+		velocity.x -= groundFriction / mass;
 		if (velocity.x < 0) {
 			velocity.x = 0.0f;
 		}
 	}
 	else {
-		velocity.x += groundFriction.x;
+		velocity.x += groundFriction / mass;
 		if (velocity.x > 0) {
 			velocity.x = 0.0f;
 		}
 	}
 
 	if (velocity.y > 0) {
-		velocity.y -= groundFriction.y;
+		velocity.y -= groundFriction / mass;
 		if (velocity.y < 0) {
 			velocity.y = 0.0f;
 		}
 	}
 	else {
-		velocity.y += groundFriction.y;
+		velocity.y += groundFriction / mass;
 		if (velocity.y > 0) {
 			velocity.y = 0.0f;
 		}
@@ -124,24 +129,6 @@ void PhysicsObject::colliders() {
 		collisionRect3.setPosition(bottomLeft.convertToSFML());
 		collisionRect4.setPosition(bottomRight.convertToSFML());
 	}
-}
-
-watenk::Vector2 PhysicsObject::convertVelocityToNewton(watenk::Vector2 velocity, float mass) {
-	float xNewton = mass * velocity.x;
-	float yNewton = mass * velocity.y;
-	return watenk::Vector2(xNewton, yNewton);
-}
-
-watenk::Vector2 PhysicsObject::convertNewtonToVelocity(watenk::Vector2 newton, float mass) {
-	float xVelocity = newton.x / mass;
-	float yVelocity = newton.y / mass;
-	return watenk::Vector2(xVelocity, yVelocity);
-}
-
-watenk::Vector2 PhysicsObject::calcFriction(watenk::Vector2 normalForce, float frictionCoefficient) {
-	float xFriction = frictionCoefficient * normalForce.x;
-	float yFriction = frictionCoefficient * normalForce.y;
-	return watenk::Vector2(xFriction, yFriction);
 }
 
 sf::Text PhysicsObject::getText(string string, watenk::Vector2 pos) {

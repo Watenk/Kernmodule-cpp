@@ -4,12 +4,24 @@
 
 using std::string;
 
-//Settings
-const int screenWidth = 1280;
-const int screenHeight = 720;
+//Dev
+const bool debug = true;
+const float UPSSpeed = 60; //Physics Update Speed in frames
+
+//WindowSettings
+const int screenWidth = 1920;
+const int screenHeight = 1080;
 const string windowName = "SFML";
 const int targetFrameRate = 144;
-const float UPSSpeed = 60;
-const int playerSpeed = 5;
 
-const bool debug = true;
+//Player
+const int playerSpeed = 65; //Newton
+
+//Friction
+const float gravity = 9.8f;
+const float massImpact = 0.02f; //The impact mass has on friction
+
+//Collision
+const int minCollisionDistance = 100; //Minium distance between 2 objects to allow collision
+const float collisionForceTransfer = 90; //Percentage
+const float collisionExtraDistance = 10.0f; //Some extra space between the 2 collided objects

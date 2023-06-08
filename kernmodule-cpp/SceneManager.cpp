@@ -35,7 +35,7 @@ void SceneManager::loadMainMenu() {
 void SceneManager::loadLvl01() {
 	std::cout << "Loading Lvl01" << std::endl;
 
-	Player* player = new Player(gameManager, watenk::Vector2(500, 500), watenk::Vector2(2, 2), watenk::Vector2(15, 15), 1.3f, 50.0f, 0);
+	Player* player = new Player(gameManager, watenk::Vector2(500, 500), watenk::Vector2(2, 2), watenk::Vector2(15, 15), 50.0f, 0);
 	gameManager->addPhysicsObject(player);
 	gameManager->inputs->setPlayer(player);
 

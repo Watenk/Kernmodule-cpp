@@ -6,8 +6,8 @@
 #include "Player.h"
 #include "GameManager.h"
 
-Player::Player(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderSize, float accelerationSpeed, float mass, int index) 
-	: PhysicsObject(gameManager, pos, size, colliderSize, mass, *gameManager->textureManager->playerTexture, index), accelerationSpeed(accelerationSpeed) {
+Player::Player(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderSize, float mass, int index) 
+	: PhysicsObject(gameManager, pos, size, colliderSize, mass, *gameManager->textureManager->playerTexture, index) {
 
 }
 
