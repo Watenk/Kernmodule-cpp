@@ -1,6 +1,4 @@
 
-#include <SFML/Graphics.hpp>
-
 #include "Vector2.h"
 
 namespace watenk {

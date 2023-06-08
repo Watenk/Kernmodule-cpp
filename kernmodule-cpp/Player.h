@@ -4,11 +4,9 @@
 
 class Player : public PhysicsObject {
 public:
-	Player(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderOffset, watenk::Vector2 colliderSize, float accelerationSpeed, float mass, sf::Texture& texture, int index, bool debug);
+	Player(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderSize, float mass, int index);
 	void update() override;
 	void ups() override;
-
-	float accelerationSpeed;
 
 private:
 	void borderCollision();

@@ -75,8 +75,8 @@ void windowEvents(RenderWindow* window, sf::Event event) {
 
 RenderWindow* generateWindow() {
     sf::RenderWindow* window = new RenderWindow(VideoMode(screenWidth, screenHeight), windowName);
+    window->setFramerateLimit(144);
     cout << "Opening Window" << endl;
-    window->setFramerateLimit(targetFrameRate);
 
     return window;
 }

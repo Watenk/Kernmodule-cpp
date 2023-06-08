@@ -13,10 +13,12 @@ GameManager::GameManager(sf::RenderWindow* window) : window(window) {
 	sceneManager = new SceneManager(this);
 	textureManager = new TextureManager();
 	timeManager = new TimeManager();
+	collisionManager = new CollisionManager(this);
 
 	//Add Managers to BaseClassList
 	addBaseClass(inputs);
 	addBaseClass(timeManager);
+	addBaseClass(collisionManager);
 
 	//LoadScene
 	sceneManager->switchScene("Lvl01");
@@ -31,34 +33,27 @@ void GameManager::update() {
 		currentObject->update();
 	}
 
-	window->draw(getFpsText());
+	//Update all PhysicsObjects
+	for (list<PhysicsObject*>::iterator it = physicsObjectList.begin(); it != physicsObjectList.end(); it++) {
+		PhysicsObject* currentObject = *it;
+		currentObject->update();
+	}
 
-	//void draw() {
-	////Objects
-	//for (list<PhysicsObject*>::iterator it = physicsObjects.begin(); it != physicsObjects.end(); it++) {
-	//    PhysicsObject currentPhysicsObject = *(*it);
-
-	//    window->draw(currentPhysicsObject.sprite);
-	//    if (currentPhysicsObject.debug) {
-	//        window->draw(currentPhysicsObject.collisionRect1);
-	//        window->draw(currentPhysicsObject.collisionRect2);
-	//        window->draw(currentPhysicsObject.collisionRect3);
-	//        window->draw(currentPhysicsObject.collisionRect4);
-	//    }
-	//}
-
-	// end the current frame
-	//}
+	window->draw(getText("LowestFrame: " + to_string(timeManager->lowestFrame), watenk::Vector2(0, 0)));
 }
 
 void GameManager::ups() {
 
-	//physicsManager.update();
-	
 	//Update all baseclasses
 	for (list<BaseClass*>::iterator it = baseClassList.begin(); it != baseClassList.end(); it++) {
 		BaseClass* curentObject = *it;
 		curentObject->ups();
+	}
+
+	//Update all PhysicsObjects
+	for (list<PhysicsObject*>::iterator it = physicsObjectList.begin(); it != physicsObjectList.end(); it++) {
+		PhysicsObject* currentObject = *it;
+		currentObject->ups();
 	}
 }
 
@@ -72,8 +67,14 @@ void GameManager::removeBaseClass(BaseClass* newBaseClass) {
 	delete newBaseClass;
 }
 
-void GameManager::draw() {
-	//window->draw(baseClass)
+void GameManager::addPhysicsObject(PhysicsObject* newPhysicsObject) {
+	newPhysicsObject->start();
+	physicsObjectList.push_back(newPhysicsObject);
+}
+
+void GameManager::removePhysicsObject(PhysicsObject* newPhysicsObject) {
+	physicsObjectList.remove(newPhysicsObject);
+	delete newPhysicsObject;
 }
 
 void GameManager::updateUps() {
@@ -84,34 +85,12 @@ void GameManager::updateUps() {
 	}
 }
 
-sf::Text GameManager::getFpsText() {
-	sf::Text fpsText;
-	fpsText.setFont(fontManager->oswaldMedium);
-	fpsText.setString(to_string(timeManager->frameRate));
-	fpsText.setCharacterSize(15);
-	fpsText.setFillColor(sf::Color::White);
-	return fpsText;
+sf::Text GameManager::getText(string string, watenk::Vector2 pos) {
+	sf::Text text;
+	text.setFont(fontManager->oswaldMedium);
+	text.setString(string);
+	text.setCharacterSize(15);
+	text.setFillColor(sf::Color::White);
+	text.setPosition(pos.convertToSFML());
+	return text;
 }
-
-//PhysicsObject* getPhysicsObject(list<PhysicsObject*> currentList, int targetIndex) {
-//
-//    for (list<PhysicsObject*>::iterator it = physicsObjects.begin(); it != physicsObjects.end(); it++) {
-//        if ((*it)->getIndex() == targetIndex) {
-//            return *it;
-//        }
-//    }
-//
-//    return NULL;
-//}
-
-//void addPhysicsObject(PhysicsObject* newObject) {
-//    physicsObjects.push_back(newObject);
-//    physicsObjectsIndex++;
-//}
-
-//bool doesItCollide(watenk::Vector2 collisionVector, PhysicsObject* otherObject) {
-//    if (collisionVector.x > otherObject->pos.x && collisionVector.y > otherObject->pos.y && collisionVector.x < otherObject->pos4.x && collisionVector.y < otherObject->pos4.y) {
-//        return true;
-//    }
-//    return false;
-//}

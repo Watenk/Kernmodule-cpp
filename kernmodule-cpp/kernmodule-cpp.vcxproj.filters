@@ -4,93 +4,87 @@
     <Filter Include="Scripts">
       <UniqueIdentifier>{dc38937f-dd26-4352-86da-0f6ae69c7a47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\Managers">
-      <UniqueIdentifier>{7b0c1648-c2d3-4644-9873-cde15962b308}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\Other">
-      <UniqueIdentifier>{32eb3455-ef9b-4bc9-9b37-fb06931eb0e1}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="BaseClass.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
       <Filter>Scripts</Filter>
     </ClCompile>
     <ClCompile Include="Inputs.cpp">
-      <Filter>Scripts\Managers</Filter>
+      <Filter>Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="TimeManager.cpp">
-      <Filter>Scripts\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Robot.cpp">
-      <Filter>Scripts\Other</Filter>
-    </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>Scripts\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Scripts\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>Scripts\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsManager.cpp">
-      <Filter>Scripts\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="FontManager.cpp">
-      <Filter>Scripts\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Scripts\Other</Filter>
+    <ClCompile Include="Main.cpp">
+      <Filter>Scripts</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsObject.cpp">
-      <Filter>Scripts\Other</Filter>
+      <Filter>Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="BaseClass.cpp">
-      <Filter>Scripts\Other</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Robot.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Scripts</Filter>
     </ClCompile>
     <ClCompile Include="Vector2.cpp">
-      <Filter>Scripts\Other</Filter>
+      <Filter>Scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GlobalData.h">
-      <Filter>Scripts\Managers</Filter>
+    <ClInclude Include="BaseClass.h">
+      <Filter>Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="Inputs.h">
-      <Filter>Scripts\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="TimeManager.h">
-      <Filter>Scripts\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Robot.h">
-      <Filter>Scripts\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="GameManager.h">
-      <Filter>Scripts\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Scripts\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Scripts\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsManager.h">
-      <Filter>Scripts\Managers</Filter>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Scripts</Filter>
     </ClInclude>
     <ClInclude Include="FontManager.h">
-      <Filter>Scripts\Managers</Filter>
+      <Filter>Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Scripts\Other</Filter>
+    <ClInclude Include="GameManager.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalData.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Inputs.h">
+      <Filter>Scripts</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsObject.h">
-      <Filter>Scripts\Other</Filter>
+      <Filter>Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="BaseClass.h">
-      <Filter>Scripts\Other</Filter>
+    <ClInclude Include="Player.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Robot.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Scripts</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.h">
-      <Filter>Scripts\Other</Filter>
+      <Filter>Scripts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
