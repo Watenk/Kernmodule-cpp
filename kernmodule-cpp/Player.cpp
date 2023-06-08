@@ -6,8 +6,8 @@
 #include "Player.h"
 #include "GameManager.h"
 
-Player::Player(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderOffset, watenk::Vector2 colliderSize, float accelerationSpeed, float mass, sf::Texture& texture, int index, bool debug) 
-	: PhysicsObject(gameManager, pos, size, colliderOffset, colliderSize, mass, texture, index, debug), accelerationSpeed(accelerationSpeed) {
+Player::Player(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderSize, float accelerationSpeed, float mass, int index) 
+	: PhysicsObject(gameManager, pos, size, colliderSize, mass, *gameManager->textureManager->playerTexture, index), accelerationSpeed(accelerationSpeed) {
 
 }
 
@@ -22,23 +22,23 @@ void Player::ups() {
 
 void Player::borderCollision() {
 
-	if (pos.x < 0) {
-		pos.x = 0.f;
+	if (topLeft.x < 0) {
+		pos.x = colliderSize.x;
 		velocity.x = 0.f;
 	}
 
-	if (pos4.x > screenWidth) {
-		pos.x = screenWidth - width;
+	if (bottomRight.x > screenWidth) {
+		pos.x = screenWidth - colliderSize.x;
 		velocity.x = 0.f;
 	}
 
-	if (pos.y < 0) {
-		pos.y = 0;
+	if (topLeft.y < 0) {
+		pos.y = colliderSize.y;
 		velocity.y = 0.f;
 	}
 
-	if (pos4.y > screenHeight) {
-		pos.y = screenHeight - height;
+	if (bottomRight.y > screenHeight) {
+		pos.y = screenHeight - colliderSize.y;
 		velocity.y = 0.f;
 	}
 }

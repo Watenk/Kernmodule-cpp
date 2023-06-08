@@ -6,6 +6,7 @@
 #include "GameManager.h"
 #include "GlobalData.h"
 #include "Player.h"
+#include "Robot.h"
 
 SceneManager::SceneManager(GameManager* gameManager) : gameManager(gameManager) {
 
@@ -34,7 +35,9 @@ void SceneManager::loadMainMenu() {
 void SceneManager::loadLvl01() {
 	std::cout << "Loading Lvl01" << std::endl;
 
-	Player* player = new Player(gameManager, watenk::Vector2(500, 500), watenk::Vector2(2, 2), watenk::Vector2(0, 0), watenk::Vector2(1, 1), 1.3f, 50.0f, *gameManager->textureManager->playerTexture, 0, true);
-	gameManager->addBaseClass(player);
+	Player* player = new Player(gameManager, watenk::Vector2(500, 500), watenk::Vector2(2, 2), watenk::Vector2(15, 15), 1.3f, 50.0f, 0);
+	gameManager->addPhysicsObject(player);
 	gameManager->inputs->setPlayer(player);
+
+	gameManager->addPhysicsObject(new Robot(gameManager, watenk::Vector2(600, 600), watenk::Vector2(2, 2), watenk::Vector2(15, 15), 50.0f, 1));
 }

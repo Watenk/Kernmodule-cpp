@@ -1,12 +1,11 @@
 #pragma once
 
-class Robot {
+#include "PhysicsObject.h"
+
+class Robot : public PhysicsObject {
 public:
-	Robot(watenk::Vector2 pos, sf::Texture& texture);
-	void Update();
-	double GetRandom(float min, float max);
-	sf::Sprite sprite;
+	Robot(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderSize, float mass, int index);
+
 private:
-	watenk::Vector2 pos;
-	watenk::Vector2 velocity;
+
 };
