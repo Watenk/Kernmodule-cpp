@@ -1,4 +1,6 @@
 
+#include <iostream>
+
 #include "TimeManager.h"
 #include "GlobalData.h"
 
@@ -32,5 +34,7 @@ void TimeManager::update() {
         lastFrameRateIndex++;
     }
 
-    deltaTime = UPSSpeed / frameRate;
+    upsTime = UPSSpeed / frameRate;
+
+    deltaTime = upsTime / 60;
 }

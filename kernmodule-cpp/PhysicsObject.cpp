@@ -8,8 +8,8 @@
 
 using std::to_string;
 
-PhysicsObject::PhysicsObject(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderSize, float mass, sf::Texture& texture, int index)
-	: gameManager(gameManager), pos(pos), size(size), colliderSize(colliderSize), mass(mass), texture(texture), index(index), objectStatic(false){
+PhysicsObject::PhysicsObject(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderSize, float mass, int health, sf::Texture& texture)
+	: gameManager(gameManager), pos(pos), size(size), colliderSize(colliderSize), mass(mass), health(health), texture(texture), objectStatic(false){
 
 	sprite.setTexture(texture);
 	sprite.setScale(size.x, size.y);
@@ -18,10 +18,12 @@ PhysicsObject::PhysicsObject(GameManager* gameManager, watenk::Vector2 pos, wate
 	width = (float)texture.getSize().x * size.x;
 	height = (float)texture.getSize().y * size.y;
 
-	collisionRect1.setSize(watenk::Vector2(5, 5).convertToSFML());
-	collisionRect2.setSize(watenk::Vector2(5, 5).convertToSFML());
-	collisionRect3.setSize(watenk::Vector2(5, 5).convertToSFML());
-	collisionRect4.setSize(watenk::Vector2(5, 5).convertToSFML());
+	if (debug) {
+		collisionRect1.setSize(watenk::Vector2(5, 5).convertToSFML());
+		collisionRect2.setSize(watenk::Vector2(5, 5).convertToSFML());
+		collisionRect3.setSize(watenk::Vector2(5, 5).convertToSFML());
+		collisionRect4.setSize(watenk::Vector2(5, 5).convertToSFML());
+	}
 }
 
 void PhysicsObject::update() {
@@ -34,7 +36,7 @@ void PhysicsObject::update() {
 		gameManager->window->draw(collisionRect3);
 		gameManager->window->draw(collisionRect4);
 
-		gameManager->window->draw(getText("Velocity: " + to_string((int)velocity.x) + ", " + to_string((int)velocity.y), watenk::Vector2(pos.x - width / 2, pos.y - height)));
+		gameManager->window->draw(gameManager->fontManager->getText("Velocity: " + to_string((int)velocity.x) + ", " + to_string((int)velocity.y), 10, sf::Color::Yellow, watenk::Vector2(pos.x - width / 2, pos.y - height)));
 	}
 }
 
@@ -64,10 +66,6 @@ void PhysicsObject::addInstantForce(watenk::Vector2 extraNewton) {
 void PhysicsObject::removeInstantForce(watenk::Vector2 removedNewton) {
 	velocity.x -= removedNewton.x / mass;
 	velocity.y -= removedNewton.y / mass;
-}
-
-int PhysicsObject::getIndex() {
-	return index;
 }
 
 void PhysicsObject::friction() {
@@ -129,14 +127,4 @@ void PhysicsObject::colliders() {
 		collisionRect3.setPosition(bottomLeft.convertToSFML());
 		collisionRect4.setPosition(bottomRight.convertToSFML());
 	}
-}
-
-sf::Text PhysicsObject::getText(string string, watenk::Vector2 pos) {
-	sf::Text text;
-	text.setFont(gameManager->fontManager->oswaldMedium);
-	text.setString(string);
-	text.setCharacterSize(15);
-	text.setFillColor(sf::Color::White);
-	text.setPosition(pos.convertToSFML());
-	return text;
 }

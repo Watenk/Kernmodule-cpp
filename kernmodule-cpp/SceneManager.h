@@ -19,9 +19,12 @@ public:
 private:
 	void unloadCurrentScene();
 	void loadMainMenu();
+	void updateMainMenu();
 	void loadGameOver();
 	void loadLvl01();
 	void updateLvl01();
+
+	float lvl01EnemyTimer;
 
 	GameManager* gameManager;
 };

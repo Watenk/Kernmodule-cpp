@@ -4,8 +4,8 @@
 #include "GameManager.h"
 #include "GlobalData.h"
 
-Bullet::Bullet(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderSize, float mass, int index)
-	: PhysicsObject(gameManager, pos, size, colliderSize, mass, *gameManager->textureManager->bulletTexture, index) {
+Bullet::Bullet(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderSize, float mass)
+	: PhysicsObject(gameManager, pos, size, colliderSize, mass, 1, *gameManager->textureManager->bulletTexture) {
 
 	staticFrictionCoefficient = 0;
 	kineticFrictionCoefficient = 0;

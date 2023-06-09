@@ -4,6 +4,9 @@
 #include "TextureManager.h"
 
 TextureManager::TextureManager() {
+ 
+    std::cout << "Loading Textures" << std::endl;
+    
     playerTexture = new sf::Texture();
     if (!playerTexture->loadFromFile("Textures/player.png"))
     {

@@ -10,18 +10,19 @@ GameManager::GameManager(sf::RenderWindow* window) : window(window) {
 	//Initialize Managers
 	fontManager = new FontManager();
 	inputs = new Inputs(this);
-	sceneManager = new SceneManager(this);
 	textureManager = new TextureManager();
 	timeManager = new TimeManager();
 	collisionManager = new CollisionManager(this);
+	sceneManager = new SceneManager(this);
 
 	//Add Managers to BaseClassList
 	addBaseClass(inputs);
 	addBaseClass(timeManager);
 	addBaseClass(collisionManager);
+	addBaseClass(sceneManager);
 
 	//LoadScene
-	sceneManager->loadScene("Lvl01");
+	sceneManager->loadScene("MainMenu");
 }
 
 void GameManager::update() {
@@ -39,7 +40,7 @@ void GameManager::update() {
 		currentObject->update();
 	}
 
-	window->draw(getText("LowestFrame: " + to_string(timeManager->lowestFrame), watenk::Vector2(0, 0)));
+	window->draw(fontManager->getText("LowestFrame: " + to_string(timeManager->lowestFrame), 15, sf::Color::White, watenk::Vector2(0, 0)));
 }
 
 void GameManager::ups() {
@@ -102,19 +103,9 @@ void GameManager::removeAllPhysicsObjects() {
 }
 
 void GameManager::updateUps() {
-	upsDeltaTime += timeManager->deltaTime;
-	if (upsDeltaTime >= 1) {
-	    upsDeltaTime = 0;
+	upsupsTime += timeManager->upsTime;
+	if (upsupsTime >= 1) {
+	    upsupsTime = 0;
 	    ups();
 	}
-}
-
-sf::Text GameManager::getText(string string, watenk::Vector2 pos) {
-	sf::Text text;
-	text.setFont(fontManager->oswaldMedium);
-	text.setString(string);
-	text.setCharacterSize(15);
-	text.setFillColor(sf::Color::White);
-	text.setPosition(pos.convertToSFML());
-	return text;
 }

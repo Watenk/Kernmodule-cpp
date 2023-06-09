@@ -31,8 +31,10 @@ public:
 	FontManager* fontManager;
 	TextureManager* textureManager;
 	TimeManager* timeManager;
-
+	SceneManager* sceneManager;
 	list<PhysicsObject*> physicsObjectList;
+
+	int score = 0;
 
 private:
 	void updateUps();
@@ -41,7 +43,6 @@ private:
 	list<BaseClass*> baseClassList;
 
 	CollisionManager* collisionManager;
-	SceneManager* sceneManager;
 
-	float upsDeltaTime = 0;
+	float upsupsTime = 0;
 };

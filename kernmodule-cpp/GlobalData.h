@@ -5,7 +5,7 @@
 using std::string;
 
 //Dev
-const bool debug = false;
+const bool debug = true;
 
 //WindowSettings
 const int screenWidth = 1920;
@@ -14,7 +14,7 @@ const string windowName = "SFML";
 const int targetFrameRate = 144;
 
 //GameSettings
-const float difficulty = 1.0f;
+const float difficulty = 1.0f; //lower value == Harder
 const float UPSSpeed = 60; //Physics Update Speed in frames
 
 //Player

@@ -11,8 +11,10 @@ public:
 	Player* player;
 
 private:
+	void mainMenuInputs();
 	void playerInputs();
 
+	watenk::Vector2 mousePos;
 	float bulletDelayTimer = 0;
 
 	GameManager* gameManager;

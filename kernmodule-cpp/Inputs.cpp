@@ -14,8 +14,16 @@ Inputs::Inputs(GameManager* gameManager) : gameManager(gameManager), player(NULL
 
 void Inputs::update() {
 
+    //Calc Mouse Angle and pos
+    sf::Vector2f mousePosSFML = gameManager->window->mapPixelToCoords(sf::Mouse::getPosition(*gameManager->window));
+    mousePos = watenk::Vector2(mousePosSFML.x, mousePosSFML.y);
+
     if (player != NULL) {
         playerInputs();
+    }
+
+    if (gameManager->sceneManager->currentScene == "MainMenu") {
+        mainMenuInputs();
     }
 }
 
@@ -23,12 +31,19 @@ void Inputs::setPlayer(Player* newPlayer) {
     player = newPlayer;
 }
 
-void Inputs::playerInputs() {
- 
-    //Calc Mouse Angle and pos
-    sf::Vector2f mousePosSFML = gameManager->window->mapPixelToCoords(sf::Mouse::getPosition(*gameManager->window));
-    watenk::Vector2 mousePos = watenk::Vector2(mousePosSFML.x, mousePosSFML.y);
+void Inputs::mainMenuInputs() {
 
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        //Player clicks on play button
+        if (mousePos.x > screenWidth / 2 - 90 && mousePos.y > screenHeight / 5 && mousePos.x < screenWidth / 2 - 90 + 200 && mousePos.y < screenHeight / 5 + 50) {
+            gameManager->sceneManager->loadScene("Lvl01");
+        }
+    }
+}
+
+void Inputs::playerInputs() {
+
+    //Calc radian player to mouse
     float distanceX = player->pos.x - mousePos.x;
     float distanceY = player->pos.y - mousePos.y;
     float mouseRadian = std::atan2(distanceY, distanceX);
@@ -43,37 +58,37 @@ void Inputs::playerInputs() {
             //Calc BulletVelocity
             watenk::Vector2 bulletNewton(-std::cos(mouseRadian) * bulletSpeed, -std::sin(mouseRadian) * bulletSpeed);
 
-            Bullet* newBullet = new Bullet(gameManager, watenk::Vector2(player->bulletOrigin.x, player->bulletOrigin.y), watenk::Vector2(0.5f, 0.5f), watenk::Vector2(10, 10), 1, 0);
+            Bullet* newBullet = new Bullet(gameManager, watenk::Vector2(player->bulletOrigin.x, player->bulletOrigin.y), watenk::Vector2(0.5f, 0.5f), watenk::Vector2(10, 10), 1);
             newBullet->addInstantForce(bulletNewton);
             gameManager->addPhysicsObject(newBullet);
 
             bulletDelayTimer = 0;
         }
         else {
-            bulletDelayTimer += gameManager->timeManager->deltaTime;
+            bulletDelayTimer += gameManager->timeManager->upsTime;
         }
     }
 
     //KeyBoard
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        player->addInstantForce(watenk::Vector2(0, -playerSpeed * gameManager->timeManager->deltaTime));
+        player->addInstantForce(watenk::Vector2(0, -playerSpeed * gameManager->timeManager->upsTime));
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        player->addInstantForce(watenk::Vector2(playerSpeed * gameManager->timeManager->deltaTime, 0));
+        player->addInstantForce(watenk::Vector2(playerSpeed * gameManager->timeManager->upsTime, 0));
 
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        player->addInstantForce(watenk::Vector2(0, playerSpeed * gameManager->timeManager->deltaTime));
+        player->addInstantForce(watenk::Vector2(0, playerSpeed * gameManager->timeManager->upsTime));
 
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        player->addInstantForce(watenk::Vector2(-playerSpeed * gameManager->timeManager->deltaTime, 0));
+        player->addInstantForce(watenk::Vector2(-playerSpeed * gameManager->timeManager->upsTime, 0));
     }
 }
