@@ -21,7 +21,7 @@ GameManager::GameManager(sf::RenderWindow* window) : window(window) {
 	addBaseClass(collisionManager);
 
 	//LoadScene
-	sceneManager->switchScene("Lvl01");
+	sceneManager->loadScene("Lvl01");
 }
 
 void GameManager::update() {
@@ -50,6 +50,19 @@ void GameManager::ups() {
 		curentObject->ups();
 	}
 
+	//Delete Deleteable Physicsobjects
+	list<PhysicsObject*>::iterator it = physicsObjectList.begin();
+	while (it != physicsObjectList.end()) {
+		PhysicsObject* currentObject = *it;
+		if (currentObject->deleteObject) {
+			delete *it;
+			it = physicsObjectList.erase(it);
+		}
+		else {
+			it++;
+		}
+	}
+
 	//Update all PhysicsObjects
 	for (list<PhysicsObject*>::iterator it = physicsObjectList.begin(); it != physicsObjectList.end(); it++) {
 		PhysicsObject* currentObject = *it;
@@ -75,6 +88,17 @@ void GameManager::addPhysicsObject(PhysicsObject* newPhysicsObject) {
 void GameManager::removePhysicsObject(PhysicsObject* newPhysicsObject) {
 	physicsObjectList.remove(newPhysicsObject);
 	delete newPhysicsObject;
+}
+
+void GameManager::removeAllPhysicsObjects() {
+
+	list<PhysicsObject*>::iterator it = physicsObjectList.begin();
+	while (it != physicsObjectList.end()) {
+		delete *it;
+		it = physicsObjectList.erase(it);
+	}
+
+	inputs->player = NULL;
 }
 
 void GameManager::updateUps() {

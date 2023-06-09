@@ -2,22 +2,26 @@
 
 #include <string>
 
+#include "BaseClass.h"
+
 class GameManager;
 
 using std::string;
 
-class SceneManager {
+class SceneManager : public BaseClass {
 public:
 	SceneManager(GameManager* gameManager);
-	void switchScene(string scene);
+	void update() override;
+	void loadScene(string scene);
 	
 	string currentScene;
 
 private:
-	void loadScene(string scene);
-	void unloadScene(string scene);
+	void unloadCurrentScene();
 	void loadMainMenu();
+	void loadGameOver();
 	void loadLvl01();
+	void updateLvl01();
 
 	GameManager* gameManager;
 };

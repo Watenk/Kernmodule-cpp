@@ -24,6 +24,7 @@ public:
 	void removeBaseClass(BaseClass* newBaseClass);
 	void addPhysicsObject(PhysicsObject* newPhysicsObject);
 	void removePhysicsObject(PhysicsObject* newPhysicsObject);
+	void removeAllPhysicsObjects();
 
 	sf::RenderWindow* window;
 	Inputs* inputs;

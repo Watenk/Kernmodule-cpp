@@ -6,7 +6,6 @@ using std::string;
 
 //Dev
 const bool debug = false;
-const float UPSSpeed = 60; //Physics Update Speed in frames
 
 //WindowSettings
 const int screenWidth = 1920;
@@ -14,10 +13,18 @@ const int screenHeight = 1080;
 const string windowName = "SFML";
 const int targetFrameRate = 144;
 
+//GameSettings
+const float difficulty = 1.0f;
+const float UPSSpeed = 60; //Physics Update Speed in frames
+
 //Player
 const int playerSpeed = 65;
-const float bulletSpeed = 10; 
-const float bulletDelay = 10;
+
+//Bullets
+const float bulletSpeed = 30;
+const float bulletDelay = 10; // Delay between bullet shots
+const float bulletOriginRadius = 50; //Radius around player the bullet origin point rotates
+const int bulletLifeTime = 200; //Updates a bullet will despawn;
 
 //Friction
 const float gravity = 9.8f;

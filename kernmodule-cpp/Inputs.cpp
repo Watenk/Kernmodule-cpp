@@ -25,23 +25,25 @@ void Inputs::setPlayer(Player* newPlayer) {
 
 void Inputs::playerInputs() {
  
-    //Calc Mouse Pos
+    //Calc Mouse Angle and pos
     sf::Vector2f mousePosSFML = gameManager->window->mapPixelToCoords(sf::Mouse::getPosition(*gameManager->window));
     watenk::Vector2 mousePos = watenk::Vector2(mousePosSFML.x, mousePosSFML.y);
+
+    float distanceX = player->pos.x - mousePos.x;
+    float distanceY = player->pos.y - mousePos.y;
+    float mouseRadian = std::atan2(distanceY, distanceX);
+
+    //calc Bullet Origin Point
+    player->bulletOrigin = watenk::Vector2(player->pos.x + bulletOriginRadius * -std::cos(mouseRadian),player->pos.y + bulletOriginRadius * -std::sin(mouseRadian));
 
     //Mouse
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
         if (bulletDelayTimer > bulletDelay) {
             //Calc BulletVelocity
-            float distanceX = player->pos.x - mousePos.x;
-            float distanceY = player->pos.y - mousePos.y;
-            float mouseAngle = std::atan2(distanceY, distanceX) * (180.0f / 3.141592653589793238f) + 180.0f;
-            watenk::Vector2 bulletNewton(std::cos(mouseAngle) * bulletSpeed, std::sin(mouseAngle) * bulletSpeed);
+            watenk::Vector2 bulletNewton(-std::cos(mouseRadian) * bulletSpeed, -std::sin(mouseRadian) * bulletSpeed);
 
-            std::cout << mouseAngle << std::endl;
-
-            Bullet* newBullet = new Bullet(gameManager, watenk::Vector2(player->pos.x + 100, player->pos.y + 100), watenk::Vector2(0.5f, 0.5f), watenk::Vector2(10, 10), 1, 0);
+            Bullet* newBullet = new Bullet(gameManager, watenk::Vector2(player->bulletOrigin.x, player->bulletOrigin.y), watenk::Vector2(0.5f, 0.5f), watenk::Vector2(10, 10), 1, 0);
             newBullet->addInstantForce(bulletNewton);
             gameManager->addPhysicsObject(newBullet);
 

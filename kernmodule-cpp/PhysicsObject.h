@@ -19,6 +19,7 @@ public:
 	int getIndex();
 
 	int index;
+	bool deleteObject = false;
 	watenk::Vector2 pos;
 	watenk::Vector2 size;
 	watenk::Vector2 velocity;
