@@ -1,6 +1,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <Vector>
 
 #include "SceneManager.h"
 #include "GameManager.h"
@@ -21,6 +22,9 @@ void SceneManager::update() {
 	else if (currentScene == "Lvl01") {
 		updateLvl01();
 	}
+	else if (currentScene == "GameOver") {
+		updateGameOver();
+	}
 }
 
 void SceneManager::loadScene(string scene) {
@@ -28,6 +32,7 @@ void SceneManager::loadScene(string scene) {
 
 	if (scene == "MainMenu") {
 		std::cout << "Loading Scene: MainMenu" << std::endl;
+		loadMainMenu();
 		currentScene = scene;
 	}
 	else if (scene == "Lvl01") {
@@ -47,12 +52,14 @@ void SceneManager::loadScene(string scene) {
 void SceneManager::unloadCurrentScene() {
 	std::cout << "Unloading Current Scene" << std::endl;
 
-	//Need to make function safer??
 	gameManager->removeAllPhysicsObjects();
 }
 
 void SceneManager::loadMainMenu() {
-	
+	std::vector<int> scores = gameManager->fileManager->getHighScores();
+	highScore1 = scores[0];
+	highScore2 = scores[1];
+	highScore3 = scores[2];
 }
 
 void SceneManager::updateMainMenu() {
@@ -65,11 +72,22 @@ void SceneManager::updateMainMenu() {
 	gameManager->window->draw(gameManager->fontManager->getText("Play", 40, sf::Color::Black, watenk::Vector2(screenWidth / 2.0f - 25.0f, screenHeight / 5.0f)));
 
 	//ScoreBoard
-	gameManager->window->draw(gameManager->fontManager->getText("Scoreboard:", 20, sf::Color::White, watenk::Vector2(screenWidth / 2.0f - 30.0f, screenHeight / 3.5f)));
+	gameManager->window->draw(gameManager->fontManager->getText("HighScores:", 50, sf::Color::White, watenk::Vector2(0.0f, screenHeight / 4.0f)));
+	gameManager->window->draw(gameManager->fontManager->getText("1: " + to_string(highScore1), 50, sf::Color::White, watenk::Vector2(0.0f, screenHeight / 3)));
+	gameManager->window->draw(gameManager->fontManager->getText("2: " + to_string(highScore2), 40, sf::Color::White, watenk::Vector2(0.0f, screenHeight / 2.5f)));
+	gameManager->window->draw(gameManager->fontManager->getText("3: " + to_string(highScore3), 30, sf::Color::White, watenk::Vector2(0.0f, screenHeight / 2.2f)));
 }
 
-void SceneManager::loadGameOver() {
-
+void SceneManager::updateGameOver() {
+	gameManager->window->draw(gameManager->fontManager->getText("...Game Over...", 50, sf::Color::Red, watenk::Vector2(screenWidth / 2.0f - 125.0f, screenHeight / 3.5f)));
+	if (gameOverTimer >= gameOverTime) {
+		gameOverTimer = 0;
+		gameManager->fileManager->saveScore(gameManager->score);
+		loadScene("MainMenu");
+	}
+	else {
+		gameOverTimer += gameManager->timeManager->deltaTime;
+	}
 }
 
 void SceneManager::loadLvl01() {

@@ -20,12 +20,17 @@ private:
 	void unloadCurrentScene();
 	void loadMainMenu();
 	void updateMainMenu();
-	void loadGameOver();
+	void updateGameOver();
 	void loadLvl01();
 	void updateLvl01();
 
 	float lvl01EnemyTimer = 0;
 	float lvl01TimeScoreTimer = 0;
+	float gameOverTimer = 0;
+
+	int highScore1 = 0;
+	int highScore2 = 0;
+	int highScore3 = 0;
 
 	GameManager* gameManager;
 };

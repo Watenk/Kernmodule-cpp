@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="BaseClass.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Inputs.cpp" />
@@ -148,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="BaseClass.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="FileManager.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GlobalData.h" />

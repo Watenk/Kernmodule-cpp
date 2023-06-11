@@ -14,6 +14,7 @@ GameManager::GameManager(sf::RenderWindow* window) : window(window) {
 	timeManager = new TimeManager();
 	collisionManager = new CollisionManager(this);
 	sceneManager = new SceneManager(this);
+	fileManager = new FileManager();
 
 	//Add Managers to BaseClassList
 	addBaseClass(inputs);
@@ -68,6 +69,12 @@ void GameManager::ups() {
 	for (list<PhysicsObject*>::iterator it = physicsObjectList.begin(); it != physicsObjectList.end(); it++) {
 		PhysicsObject* currentObject = *it;
 		currentObject->ups();
+	}
+
+	//Need to make this more efficient
+	//Switch scene
+	if (sceneManager->currentScene == "Lvl01" && killObjects == true) {
+		sceneManager->loadScene("GameOver");
 	}
 }
 

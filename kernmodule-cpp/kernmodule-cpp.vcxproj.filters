@@ -63,6 +63,9 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Scripts\BaseClass\PhysicsObject</Filter>
     </ClCompile>
+    <ClCompile Include="FileManager.cpp">
+      <Filter>Scripts\Setup Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GlobalData.h">
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="Vector2.h">
       <Filter>Scripts\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="FileManager.h">
+      <Filter>Scripts\Setup Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

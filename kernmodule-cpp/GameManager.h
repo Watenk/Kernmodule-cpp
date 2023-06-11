@@ -11,6 +11,7 @@
 #include "CollisionManager.h"
 #include "TextureManager.h"
 #include "TimeManager.h"
+#include "FileManager.h"
 #include "Vector2.h"
 
 using std::list;
@@ -32,9 +33,11 @@ public:
 	TextureManager* textureManager;
 	TimeManager* timeManager;
 	SceneManager* sceneManager;
+	FileManager* fileManager;
 	list<PhysicsObject*> physicsObjectList;
 
 	int score = 0;
+	bool killObjects = false;
 
 private:
 	void updateUps();
