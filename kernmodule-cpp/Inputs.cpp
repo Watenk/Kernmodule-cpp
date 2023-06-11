@@ -43,52 +43,60 @@ void Inputs::mainMenuInputs() {
 
 void Inputs::playerInputs() {
 
-    //Calc radian player to mouse
-    float distanceX = player->pos.x - mousePos.x;
-    float distanceY = player->pos.y - mousePos.y;
-    float mouseRadian = std::atan2(distanceY, distanceX);
-
-    //calc Bullet Origin Point
-    player->bulletOrigin = watenk::Vector2(player->pos.x + bulletOriginRadius * -std::cos(mouseRadian),player->pos.y + bulletOriginRadius * -std::sin(mouseRadian));
-
     //Mouse
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
-        if (bulletDelayTimer > bulletDelay) {
+        isShooting = true;
+
+        if (playerShootSpeedTimer > playerShootSpeed) {
+            //Calc radian player to mouse
+            float distanceX = player->pos.x - mousePos.x;
+            float distanceY = player->pos.y - mousePos.y;
+            float mouseRadian = std::atan2(distanceY, distanceX);
+
+            //calc Bullet Origin Point
+            player->playerBulletOrigin = watenk::Vector2(player->pos.x + playerBulletOriginRadius * -std::cos(mouseRadian), player->pos.y + playerBulletOriginRadius * -std::sin(mouseRadian));
+
             //Calc BulletVelocity
             watenk::Vector2 bulletNewton(-std::cos(mouseRadian) * bulletSpeed, -std::sin(mouseRadian) * bulletSpeed);
 
-            Bullet* newBullet = new Bullet(gameManager, watenk::Vector2(player->bulletOrigin.x, player->bulletOrigin.y), watenk::Vector2(0.5f, 0.5f), watenk::Vector2(10, 10), 1);
+            Bullet* newBullet = new Bullet(gameManager, watenk::Vector2(player->playerBulletOrigin.x, player->playerBulletOrigin.y), watenk::Vector2(0.5f, 0.5f), watenk::Vector2(8, 8), bulletMass);
             newBullet->addInstantForce(bulletNewton);
             gameManager->addPhysicsObject(newBullet);
 
-            bulletDelayTimer = 0;
+            playerShootSpeedTimer = 0;
         }
         else {
-            bulletDelayTimer += gameManager->timeManager->upsTime;
+            playerShootSpeedTimer += gameManager->timeManager->upsTime;
         }
+    }
+    else {
+        isShooting = false;
     }
 
     //KeyBoard
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
         player->addInstantForce(watenk::Vector2(0, -playerSpeed * gameManager->timeManager->upsTime));
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
         player->addInstantForce(watenk::Vector2(playerSpeed * gameManager->timeManager->upsTime, 0));
-
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         player->addInstantForce(watenk::Vector2(0, playerSpeed * gameManager->timeManager->upsTime));
-
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
         player->addInstantForce(watenk::Vector2(-playerSpeed * gameManager->timeManager->upsTime, 0));
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && playerDashTimer >= playerDashDelay) {
+        player->addInstantForce(watenk::Vector2(player->velocity.x * playerMass * playerDashMultiplier, player->velocity.y * playerMass * playerDashMultiplier));
+        playerDashTimer = 0;
+        std::cout << "Dash!!!" << std::endl;
+    }
+    else {
+        playerDashTimer += gameManager->timeManager->deltaTime;
     }
 }

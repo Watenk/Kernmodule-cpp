@@ -68,6 +68,14 @@ void PhysicsObject::removeInstantForce(watenk::Vector2 removedNewton) {
 	velocity.y -= removedNewton.y / mass;
 }
 
+void PhysicsObject::doDamage(int hp) {
+	health -= hp;
+
+	if (health <= 0) {
+		deleteObject = true;
+	}
+}
+
 void PhysicsObject::friction() {
 
 	float groundFriction;

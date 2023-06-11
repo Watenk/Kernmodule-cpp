@@ -24,7 +24,8 @@ private:
 	void loadLvl01();
 	void updateLvl01();
 
-	float lvl01EnemyTimer;
+	float lvl01EnemyTimer = 0;
+	float lvl01TimeScoreTimer = 0;
 
 	GameManager* gameManager;
 };

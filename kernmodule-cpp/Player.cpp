@@ -20,6 +20,14 @@ void Player::ups() {
 	PhysicsObject::ups();
 }
 
+void Player::doDamage(int hp) {
+	PhysicsObject::doDamage(hp);
+
+	if (health <= 0) {
+		gameManager->sceneManager->loadScene("GameOver");
+	}
+}
+
 void Player::borderCollision() {
 
 	if (topLeft.x < 0) {

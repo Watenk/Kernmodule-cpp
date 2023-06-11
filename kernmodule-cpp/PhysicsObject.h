@@ -14,6 +14,7 @@ public:
 	PhysicsObject(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderSize, float mass, int health, sf::Texture& texture);
 	virtual void update() override;
 	virtual void ups() override;
+	virtual void doDamage(int hp);
 	void addInstantForce(watenk::Vector2 extraNewton);
 	void removeInstantForce(watenk::Vector2 removedNewton);
 

@@ -72,10 +72,17 @@ void CollisionManager::doCollision(PhysicsObject* object1, PhysicsObject* object
 		otherObject = object1;
 	}
 	
+	//Damage
+	float currentNewton = (abs(currentObject->velocity.x) + abs(currentObject->velocity.y)) * currentObject->mass;
+	float otherNewton = (abs(otherObject->velocity.x) + abs(otherObject->velocity.y)) * otherObject->mass;
+
+	currentObject->doDamage((int)(otherNewton / newtonDamage));
+	otherObject->doDamage((int)(currentNewton / newtonDamage));
+
+	//Velocity
 	float totalXVelocity = currentObject->velocity.x + otherObject->velocity.x;
 	float totalYVelocity = currentObject->velocity.y + otherObject->velocity.y;
 
-	//Velocity
 	currentObject->removeInstantForce(watenk::Vector2(totalXVelocity * currentObject->mass * (collisionForceTransfer / 100), totalYVelocity * currentObject->mass * (collisionForceTransfer / 100)));
 	otherObject->addInstantForce(watenk::Vector2(totalXVelocity * otherObject->mass * (collisionForceTransfer / 100), totalYVelocity * otherObject->mass * (collisionForceTransfer / 100)));
 
@@ -96,9 +103,6 @@ void CollisionManager::doCollision(PhysicsObject* object1, PhysicsObject* object
 			otherObject->pos.y = currentObject->pos.y - currentObject->colliderSize.y - otherObject->colliderSize.y - collisionExtraDistance;
 		}
 	}
-
-	//Do Damage
-	//Need to add Damage
 }
 
 float CollisionManager::getDistance(PhysicsObject* object1, PhysicsObject* object2) {

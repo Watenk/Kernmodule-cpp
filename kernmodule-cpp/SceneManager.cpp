@@ -8,8 +8,10 @@
 #include "Player.h"
 #include "Robot.h"
 
-SceneManager::SceneManager(GameManager* gameManager) : gameManager(gameManager) {
+using std::to_string;
 
+SceneManager::SceneManager(GameManager* gameManager) : gameManager(gameManager) {
+	srand((unsigned int)time(NULL));
 }
 
 void SceneManager::update() {
@@ -44,6 +46,8 @@ void SceneManager::loadScene(string scene) {
 
 void SceneManager::unloadCurrentScene() {
 	std::cout << "Unloading Current Scene" << std::endl;
+
+	//Need to make function safer??
 	gameManager->removeAllPhysicsObjects();
 }
 
@@ -58,7 +62,7 @@ void SceneManager::updateMainMenu() {
 	playbutton.setSize(watenk::Vector2(200, 50).convertToSFML());
 	playbutton.setPosition(watenk::Vector2(screenWidth / 2.0f - 90.0f, screenHeight / 5.0f).convertToSFML());
 	gameManager->window->draw(playbutton);
-	gameManager->window->draw(gameManager->fontManager->getText("Play", 40, sf::Color::Black, watenk::Vector2(screenWidth / 2.0f - 2.0f, screenHeight / 5.0f)));
+	gameManager->window->draw(gameManager->fontManager->getText("Play", 40, sf::Color::Black, watenk::Vector2(screenWidth / 2.0f - 25.0f, screenHeight / 5.0f)));
 
 	//ScoreBoard
 	gameManager->window->draw(gameManager->fontManager->getText("Scoreboard:", 20, sf::Color::White, watenk::Vector2(screenWidth / 2.0f - 30.0f, screenHeight / 3.5f)));
@@ -69,17 +73,41 @@ void SceneManager::loadGameOver() {
 }
 
 void SceneManager::loadLvl01() {
-	Player* player = new Player(gameManager, watenk::Vector2(500, 500), watenk::Vector2(2, 2), watenk::Vector2(15, 15), 50.0f, 3);
+	Player* player = new Player(gameManager, watenk::Vector2(500, 500), watenk::Vector2(2, 2), watenk::Vector2(15, 15), playerMass, playerHealth);
 	gameManager->addPhysicsObject(player);
 	gameManager->inputs->setPlayer(player);
 }
 
 void SceneManager::updateLvl01() {
 	
-	if (lvl01EnemyTimer > 10.0f - (gameManager->score / 1000) * difficulty) {
-		//Need to Add Randomness
-		gameManager->addPhysicsObject(new Robot(gameManager, watenk::Vector2(700, 500), watenk::Vector2(3, 3), watenk::Vector2(50, 50), 500.0f, 1));
-		lvl01EnemyTimer = 0;
+	//UI
+	gameManager->window->draw(gameManager->fontManager->getText("Score:" + to_string(gameManager->score), 20, sf::Color::White, watenk::Vector2((screenWidth / 2) - 150.0f, screenHeight - 30.0f)));
+	gameManager->window->draw(gameManager->fontManager->getText("Health:" + to_string(gameManager->inputs->player->health), 20, sf::Color::Red, watenk::Vector2((screenWidth - screenWidth / 2) + 150.0f, screenHeight - 30.0f)));
+
+	if (gameManager->inputs->playerDashTimer >= playerDashDelay) {
+		gameManager->window->draw(gameManager->fontManager->getText("Dash Ready!!", 20, sf::Color::White, watenk::Vector2((screenWidth / 2) - 25.0f, screenHeight - 30.0f)));
+	}
+
+	//TimeScore
+	if (lvl01TimeScoreTimer >= 1) {
+		if (ifShootingNoTimeScore == true) {
+			if (gameManager->inputs->isShooting == false) {
+				lvl01TimeScoreTimer = 0.0f;
+				gameManager->score += timeScore;
+			}
+		}
+		else {
+			lvl01TimeScoreTimer = 0.0f;
+			gameManager->score += timeScore;
+		}
+	}
+	else {
+		lvl01TimeScoreTimer += gameManager->timeManager->deltaTime;
+	}
+
+	if (lvl01EnemyTimer >= 6.0f - (gameManager->score / 1500.0f) * difficulty) {
+		gameManager->addPhysicsObject(new Robot(gameManager, watenk::Vector2(screenWidth + 100.0f + (float)(std::rand() % 100 + 1), (float)(std::rand() % screenHeight + 1)), watenk::Vector2(2, 2), watenk::Vector2(20, 20), robotMass, robotHealth + (int)((gameManager->score / 300) * difficulty)));
+		lvl01EnemyTimer = 0.0f;
 	}
 	else {
 		lvl01EnemyTimer += gameManager->timeManager->deltaTime;
