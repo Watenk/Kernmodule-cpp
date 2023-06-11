@@ -74,6 +74,7 @@ void GameManager::ups() {
 	//Need to make this more efficient
 	//Switch scene
 	if (sceneManager->currentScene == "Lvl01" && killObjects == true) {
+		killObjects = false;
 		sceneManager->loadScene("GameOver");
 	}
 }

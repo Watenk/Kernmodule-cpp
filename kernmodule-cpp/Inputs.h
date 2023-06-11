@@ -13,6 +13,7 @@ public:
 
 	bool isShooting = false;
 	float playerDashTimer = 0;
+	float playerBurstTimer = 0;
 	
 private:
 	void mainMenuInputs();
@@ -20,5 +21,8 @@ private:
 
 	GameManager* gameManager;
 
+	float playerShootingSpeed = 0;
 	float playerShootSpeedTimer = 0;
+	bool burst = false;
+	float playerBurstDurationTimer = 0;
 };

@@ -67,22 +67,25 @@ void SceneManager::updateMainMenu() {
 	//Play button
 	sf::RectangleShape playbutton;
 	playbutton.setSize(watenk::Vector2(200, 50).convertToSFML());
-	playbutton.setPosition(watenk::Vector2(screenWidth / 2.0f - 90.0f, screenHeight / 5.0f).convertToSFML());
+	playbutton.setPosition(watenk::Vector2(screenWidth / 2.0f - 90.0f, screenHeight - 200).convertToSFML());
 	gameManager->window->draw(playbutton);
-	gameManager->window->draw(gameManager->fontManager->getText("Play", 40, sf::Color::Black, watenk::Vector2(screenWidth / 2.0f - 25.0f, screenHeight / 5.0f)));
+	gameManager->window->draw(gameManager->fontManager->getText("Play", 40, sf::Color::Black, watenk::Vector2(screenWidth / 2.0f - 25.0f, screenHeight - 200)));
 
 	//ScoreBoard
-	gameManager->window->draw(gameManager->fontManager->getText("HighScores:", 50, sf::Color::White, watenk::Vector2(0.0f, screenHeight / 4.0f)));
-	gameManager->window->draw(gameManager->fontManager->getText("1: " + to_string(highScore1), 50, sf::Color::White, watenk::Vector2(0.0f, screenHeight / 3)));
-	gameManager->window->draw(gameManager->fontManager->getText("2: " + to_string(highScore2), 40, sf::Color::White, watenk::Vector2(0.0f, screenHeight / 2.5f)));
-	gameManager->window->draw(gameManager->fontManager->getText("3: " + to_string(highScore3), 30, sf::Color::White, watenk::Vector2(0.0f, screenHeight / 2.2f)));
+	gameManager->window->draw(gameManager->fontManager->getText("HighScores:", 50, sf::Color::White, watenk::Vector2(0.0f, 25)));
+	gameManager->window->draw(gameManager->fontManager->getText("1: " + to_string(highScore1), 50, sf::Color::White, watenk::Vector2(0.0f, 85)));
+	gameManager->window->draw(gameManager->fontManager->getText("2: " + to_string(highScore2), 40, sf::Color::White, watenk::Vector2(0.0f, 135)));
+	gameManager->window->draw(gameManager->fontManager->getText("3: " + to_string(highScore3), 30, sf::Color::White, watenk::Vector2(0.0f, 175)));
 }
 
 void SceneManager::updateGameOver() {
 	gameManager->window->draw(gameManager->fontManager->getText("...Game Over...", 50, sf::Color::Red, watenk::Vector2(screenWidth / 2.0f - 125.0f, screenHeight / 3.5f)));
+	gameManager->window->draw(gameManager->fontManager->getText("Score: " + to_string(gameManager->score), 30, sf::Color::White, watenk::Vector2(screenWidth / 2.0f - 50.0f, screenHeight / 2.0f)));
+
 	if (gameOverTimer >= gameOverTime) {
 		gameOverTimer = 0;
 		gameManager->fileManager->saveScore(gameManager->score);
+		gameManager->score = 0;
 		loadScene("MainMenu");
 	}
 	else {
@@ -102,8 +105,12 @@ void SceneManager::updateLvl01() {
 	gameManager->window->draw(gameManager->fontManager->getText("Score:" + to_string(gameManager->score), 20, sf::Color::White, watenk::Vector2((screenWidth / 2) - 150.0f, screenHeight - 30.0f)));
 	gameManager->window->draw(gameManager->fontManager->getText("Health:" + to_string(gameManager->inputs->player->health), 20, sf::Color::Red, watenk::Vector2((screenWidth - screenWidth / 2) + 150.0f, screenHeight - 30.0f)));
 
-	if (gameManager->inputs->playerDashTimer >= playerDashDelay) {
+	if (gameManager->inputs->playerDashTimer >= dashDelay) {
 		gameManager->window->draw(gameManager->fontManager->getText("Dash Ready!!", 20, sf::Color::White, watenk::Vector2((screenWidth / 2) - 25.0f, screenHeight - 30.0f)));
+	}
+
+	if (gameManager->inputs->playerBurstTimer >= burstDelay) {
+		gameManager->window->draw(gameManager->fontManager->getText("Burst Ready!!", 20, sf::Color::Blue, watenk::Vector2((screenWidth / 2) - 25.0f, screenHeight - 60.0f)));
 	}
 
 	//TimeScore

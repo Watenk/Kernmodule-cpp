@@ -21,7 +21,7 @@ void Robot::ups() {
 	float robotRadian = std::atan2(playerDistanceY, playerDistanceX);
 
 	if (playerTotalDistance >= robotPlayerTargetDistance) { //move towards player
-		watenk::Vector2 robotNewton(-std::cos(robotRadian) * (robotSpeed + ((gameManager->score / 150.0f) * difficulty)), -std::sin(robotRadian) * (robotSpeed + ((gameManager->score / 150.0f) * difficulty)));
+		watenk::Vector2 robotNewton(-std::cos(robotRadian) * (robotSpeed + ((gameManager->score / 200.0f) * difficulty)), -std::sin(robotRadian) * (robotSpeed + ((gameManager->score / 200.0f) * difficulty)));
 		addInstantForce(robotNewton);
 	}
 	else { //move away from player
@@ -40,8 +40,8 @@ void Robot::ups() {
 			playerDistanceY += (std::rand() % (int)(robotShootInaccuracy - (gameManager->score / 100.0f) * difficulty) + 1);
 		}														   
 		else {													   
-			playerDistanceX += (std::rand() % (int)(robotShootInaccuracy - (gameManager->score / 100.0f) * difficulty) + 1);
-			playerDistanceY += (std::rand() % (int)(robotShootInaccuracy - (gameManager->score / 100.0f) * difficulty) + 1);
+			playerDistanceX -= (std::rand() % (int)(robotShootInaccuracy - (gameManager->score / 100.0f) * difficulty) + 1);
+			playerDistanceY -= (std::rand() % (int)(robotShootInaccuracy - (gameManager->score / 100.0f) * difficulty) + 1);
 		}
 
 		//Calc radian player to mouse
@@ -67,5 +67,8 @@ void Robot::doDamage(int hp) {
 
 	if (health <= 0) {
 		gameManager->score += robotKillScoreAmount;
+		if (gameManager->inputs->player->health < playerHealth) {
+			gameManager->inputs->player->health += robotKillHealthAmount;
+		}
 	}
 }

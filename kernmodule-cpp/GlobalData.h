@@ -23,11 +23,16 @@ const bool ifShootingNoTimeScore = true;
 //Player
 const int playerSpeed = 65;
 const float playerMass = 50.0f; //The mass will impact the speed!
-const int playerDashDelay = 5; // in Seconds
-const float playerDashMultiplier = 5; //Strenght of the dash
 const int playerHealth = 25;
-const float playerShootSpeed = 5.0f; // Delay between bullet shots in ups
+const float playerShootSpeed = 5.0f; //Delay between bullet shots in ups
 const float playerBulletOriginRadius = 50.0f; //Radius around player the bullet origin point rotates
+
+//Powers
+const int dashDelay = 5; // in Seconds
+const float dashMultiplier = 300; //Strenght of the dash
+const int burstDelay = 30; // in Seconds
+const float burstSpeed = 1.0f; //Delay between bullet shots in ups
+const int burstDuration = 5; //In Seconds
 
 //Bullets
 const float bulletSpeed = 150.0f;
@@ -47,6 +52,7 @@ const float newtonDamage = 50.0f; //How much newton for 1 hp damage
 //Robot
 const float robotMass = 50.0f; //The mass will impact the speed!
 const int robotKillScoreAmount = 50; //Score gained when a robot dies
+const int robotKillHealthAmount = 1; //Health gained when killing a enemy
 const float robotBulletOriginRadius = 100.0f; //Radius around robot the bullet origin point rotates
 const float robotPlayerTargetDistance = 150.0f; //The target Distance between the player and the robot
 
