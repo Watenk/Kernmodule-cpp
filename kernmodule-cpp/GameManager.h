@@ -11,6 +11,7 @@
 #include "CollisionManager.h"
 #include "TextureManager.h"
 #include "TimeManager.h"
+#include "FileManager.h"
 #include "Vector2.h"
 
 using std::list;
@@ -24,14 +25,19 @@ public:
 	void removeBaseClass(BaseClass* newBaseClass);
 	void addPhysicsObject(PhysicsObject* newPhysicsObject);
 	void removePhysicsObject(PhysicsObject* newPhysicsObject);
+	void removeAllPhysicsObjects();
 
 	sf::RenderWindow* window;
 	Inputs* inputs;
 	FontManager* fontManager;
 	TextureManager* textureManager;
 	TimeManager* timeManager;
-
+	SceneManager* sceneManager;
+	FileManager* fileManager;
 	list<PhysicsObject*> physicsObjectList;
+
+	int score = 0;
+	bool killObjects = false;
 
 private:
 	void updateUps();
@@ -40,7 +46,6 @@ private:
 	list<BaseClass*> baseClassList;
 
 	CollisionManager* collisionManager;
-	SceneManager* sceneManager;
 
-	float upsDeltaTime = 0;
+	float upsupsTime = 0;
 };

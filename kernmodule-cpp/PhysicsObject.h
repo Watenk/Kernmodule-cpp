@@ -11,19 +11,20 @@ class GameManager;
 class PhysicsObject : public BaseClass {
 
 public:
-	PhysicsObject(GameManager* gamemanager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderSize, float mass, sf::Texture& texture, int index);
+	PhysicsObject(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderSize, float mass, int health, sf::Texture& texture);
 	virtual void update() override;
 	virtual void ups() override;
+	virtual void doDamage(int hp);
 	void addInstantForce(watenk::Vector2 extraNewton);
 	void removeInstantForce(watenk::Vector2 removedNewton);
-	int getIndex();
 
-	int index;
+	bool deleteObject = false;
 	watenk::Vector2 pos;
 	watenk::Vector2 size;
 	watenk::Vector2 velocity;
 	watenk::Vector2 colliderSize;
 	sf::Sprite sprite;
+	int health;
 	float mass;
 
 	//Collision
@@ -46,7 +47,6 @@ public:
 protected:
 	void friction();
 	void colliders();
-	sf::Text getText(string string, watenk::Vector2 pos);
 
 	bool objectStatic;
 	sf::Texture texture;

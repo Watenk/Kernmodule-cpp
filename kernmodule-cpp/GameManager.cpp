@@ -10,18 +10,20 @@ GameManager::GameManager(sf::RenderWindow* window) : window(window) {
 	//Initialize Managers
 	fontManager = new FontManager();
 	inputs = new Inputs(this);
-	sceneManager = new SceneManager(this);
 	textureManager = new TextureManager();
 	timeManager = new TimeManager();
 	collisionManager = new CollisionManager(this);
+	sceneManager = new SceneManager(this);
+	fileManager = new FileManager();
 
 	//Add Managers to BaseClassList
 	addBaseClass(inputs);
 	addBaseClass(timeManager);
 	addBaseClass(collisionManager);
+	addBaseClass(sceneManager);
 
 	//LoadScene
-	sceneManager->switchScene("Lvl01");
+	sceneManager->loadScene("MainMenu");
 }
 
 void GameManager::update() {
@@ -39,7 +41,7 @@ void GameManager::update() {
 		currentObject->update();
 	}
 
-	window->draw(getText("LowestFrame: " + to_string(timeManager->lowestFrame), watenk::Vector2(0, 0)));
+	window->draw(fontManager->getText("LowestFrame: " + to_string(timeManager->lowestFrame), 15, sf::Color::White, watenk::Vector2(0, 0)));
 }
 
 void GameManager::ups() {
@@ -50,10 +52,30 @@ void GameManager::ups() {
 		curentObject->ups();
 	}
 
+	//Delete Deleteable Physicsobjects
+	list<PhysicsObject*>::iterator it = physicsObjectList.begin();
+	while (it != physicsObjectList.end()) {
+		PhysicsObject* currentObject = *it;
+		if (currentObject->deleteObject) {
+			delete *it;
+			it = physicsObjectList.erase(it);
+		}
+		else {
+			it++;
+		}
+	}
+
 	//Update all PhysicsObjects
 	for (list<PhysicsObject*>::iterator it = physicsObjectList.begin(); it != physicsObjectList.end(); it++) {
 		PhysicsObject* currentObject = *it;
 		currentObject->ups();
+	}
+
+	//Need to make this more efficient
+	//Switch scene
+	if (sceneManager->currentScene == "Lvl01" && killObjects == true) {
+		killObjects = false;
+		sceneManager->loadScene("GameOver");
 	}
 }
 
@@ -77,20 +99,21 @@ void GameManager::removePhysicsObject(PhysicsObject* newPhysicsObject) {
 	delete newPhysicsObject;
 }
 
-void GameManager::updateUps() {
-	upsDeltaTime += timeManager->deltaTime;
-	if (upsDeltaTime >= 1) {
-	    upsDeltaTime = 0;
-	    ups();
+void GameManager::removeAllPhysicsObjects() {
+
+	list<PhysicsObject*>::iterator it = physicsObjectList.begin();
+	while (it != physicsObjectList.end()) {
+		delete *it;
+		it = physicsObjectList.erase(it);
 	}
+
+	inputs->player = NULL;
 }
 
-sf::Text GameManager::getText(string string, watenk::Vector2 pos) {
-	sf::Text text;
-	text.setFont(fontManager->oswaldMedium);
-	text.setString(string);
-	text.setCharacterSize(15);
-	text.setFillColor(sf::Color::White);
-	text.setPosition(pos.convertToSFML());
-	return text;
+void GameManager::updateUps() {
+	upsupsTime += timeManager->upsTime;
+	if (upsupsTime >= 1) {
+	    upsupsTime = 0;
+	    ups();
+	}
 }

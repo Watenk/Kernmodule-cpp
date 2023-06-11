@@ -7,5 +7,6 @@ public:
 	TextureManager();
 
 	sf::Texture* playerTexture;
-	sf::Texture* enemyTexture;
+	sf::Texture* robotTexture;
+	sf::Texture* bulletTexture;
 };

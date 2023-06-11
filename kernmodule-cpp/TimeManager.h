@@ -7,6 +7,7 @@
 class TimeManager : public BaseClass {
 public:
 	void update() override;
+	float upsTime = 0;
 	float deltaTime = 0;
 	int frameTime = 0;
 	int frameRate = 0;

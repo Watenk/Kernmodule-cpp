@@ -6,8 +6,8 @@
 #include "Player.h"
 #include "GameManager.h"
 
-Player::Player(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderSize, float mass, int index) 
-	: PhysicsObject(gameManager, pos, size, colliderSize, mass, *gameManager->textureManager->playerTexture, index) {
+Player::Player(GameManager* gameManager, watenk::Vector2 pos, watenk::Vector2 size, watenk::Vector2 colliderSize, float mass, int health) 
+	: PhysicsObject(gameManager, pos, size, colliderSize, mass, health, *gameManager->textureManager->playerTexture) {
 
 }
 
@@ -18,6 +18,14 @@ void Player::update() {
 void Player::ups() {
 	borderCollision();
 	PhysicsObject::ups();
+}
+
+void Player::doDamage(int hp) {
+	PhysicsObject::doDamage(hp);
+
+	if (health <= 0) {
+		gameManager->killObjects = true;
+	}
 }
 
 void Player::borderCollision() {

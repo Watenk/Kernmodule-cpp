@@ -2,22 +2,35 @@
 
 #include <string>
 
+#include "BaseClass.h"
+
 class GameManager;
 
 using std::string;
 
-class SceneManager {
+class SceneManager : public BaseClass {
 public:
 	SceneManager(GameManager* gameManager);
-	void switchScene(string scene);
+	void update() override;
+	void loadScene(string scene);
 	
 	string currentScene;
 
 private:
-	void loadScene(string scene);
-	void unloadScene(string scene);
+	void unloadCurrentScene();
 	void loadMainMenu();
+	void updateMainMenu();
+	void updateGameOver();
 	void loadLvl01();
+	void updateLvl01();
+
+	float lvl01EnemyTimer = 0;
+	float lvl01TimeScoreTimer = 0;
+	float gameOverTimer = 0;
+
+	int highScore1 = 0;
+	int highScore2 = 0;
+	int highScore3 = 0;
 
 	GameManager* gameManager;
 };
