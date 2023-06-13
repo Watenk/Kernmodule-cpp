@@ -1,5 +1,4 @@
 
-#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <Vector>
 
@@ -13,6 +12,25 @@ using std::to_string;
 
 SceneManager::SceneManager(GameManager* gameManager) : gameManager(gameManager) {
 	srand((unsigned int)time(NULL));
+
+	//background
+	skyboxSprite.setTexture(*gameManager->textureManager->skyboxTexture);
+
+	backgroundDunesSprite.setTexture(*gameManager->textureManager->backgroundDunesTexture);
+	backgroundDunesSprite.setTextureRect(sf::IntRect(0, 0, (int)gameManager->textureManager->backgroundDunesTexture->getSize().x * 2, (int)gameManager->textureManager->backgroundDunesTexture->getSize().y));
+	backgroundDunesSprite.setPosition(0, (float)(screenHeight - (int)gameManager->textureManager->backgroundDunesTexture->getSize().y));
+
+	backgroundDunesSprite2.setTexture(*gameManager->textureManager->backgroundDunesTexture);
+	backgroundDunesSprite2.setTextureRect(sf::IntRect(0, 0, (int)gameManager->textureManager->backgroundDunesTexture->getSize().x * 2, (int)gameManager->textureManager->backgroundDunesTexture->getSize().y));
+	backgroundDunesSprite2.setPosition(backgroundDunesSprite.getPosition().x + (backgroundDunesSprite.getTexture()->getSize().x * 2), (float)(screenHeight - (int)gameManager->textureManager->backgroundDunesTexture->getSize().y));
+
+	backgroundSprite.setTexture(*gameManager->textureManager->backgroundTexture);
+	backgroundSprite.setTextureRect(sf::IntRect(0, 0, (int)gameManager->textureManager->backgroundTexture->getSize().x * 2, (int)gameManager->textureManager->backgroundTexture->getSize().y));
+	backgroundSprite.setPosition(0, (float)(screenHeight - (int)gameManager->textureManager->backgroundTexture->getSize().y));
+
+	backgroundSprite2.setTexture(*gameManager->textureManager->backgroundTexture);
+	backgroundSprite2.setTextureRect(sf::IntRect(0, 0, (int)gameManager->textureManager->backgroundTexture->getSize().x * 2, (int)gameManager->textureManager->backgroundTexture->getSize().y));
+	backgroundSprite2.setPosition(backgroundSprite.getPosition().x + (backgroundSprite.getTexture()->getSize().x * 2), (float)(screenHeight - (int)gameManager->textureManager->backgroundTexture->getSize().y));
 }
 
 void SceneManager::update() {
@@ -64,6 +82,13 @@ void SceneManager::loadMainMenu() {
 
 void SceneManager::updateMainMenu() {
 
+	//background
+	gameManager->window->draw(skyboxSprite);
+	gameManager->window->draw(backgroundDunesSprite);
+	gameManager->window->draw(backgroundDunesSprite2);
+	gameManager->window->draw(backgroundSprite);
+	gameManager->window->draw(backgroundSprite2);
+
 	//Play button
 	sf::RectangleShape playbutton;
 	playbutton.setSize(watenk::Vector2(200, 50).convertToSFML());
@@ -101,16 +126,51 @@ void SceneManager::loadLvl01() {
 
 void SceneManager::updateLvl01() {
 	
+	//Background
+	backgroundDunesSprite.setPosition(backgroundDunesSprite.getPosition().x - backgroundSpeed / 5.0f, backgroundDunesSprite.getPosition().y);
+	backgroundDunesSprite2.setPosition(backgroundDunesSprite2.getPosition().x - backgroundSpeed / 5.0f, backgroundDunesSprite2.getPosition().y);
+	backgroundSprite.setPosition(backgroundSprite.getPosition().x - backgroundSpeed, backgroundSprite.getPosition().y);
+	backgroundSprite2.setPosition(backgroundSprite2.getPosition().x - backgroundSpeed, backgroundSprite2.getPosition().y);
+
+	if (backgroundDunesSprite.getPosition().x <= -(int)(backgroundDunesSprite.getTexture()->getSize().x * 2)) {
+		backgroundDunesSprite.setPosition(backgroundDunesSprite2.getPosition().x + (backgroundDunesSprite.getTexture()->getSize().x * 2), backgroundDunesSprite.getPosition().y);
+	}
+
+	if (backgroundDunesSprite2.getPosition().x <= -(int)(backgroundDunesSprite2.getTexture()->getSize().x * 2)) {
+		backgroundDunesSprite2.setPosition(backgroundDunesSprite.getPosition().x + (backgroundDunesSprite2.getTexture()->getSize().x * 2), backgroundDunesSprite2.getPosition().y);
+	}
+
+	if (backgroundSprite.getPosition().x <= -(int)(backgroundSprite.getTexture()->getSize().x * 2)) {
+		backgroundSprite.setPosition(backgroundSprite2.getPosition().x + (backgroundSprite.getTexture()->getSize().x * 2), backgroundSprite.getPosition().y);
+	}
+
+	if (backgroundSprite2.getPosition().x <= -(int)(backgroundSprite2.getTexture()->getSize().x * 2)) {
+		backgroundSprite2.setPosition(backgroundSprite.getPosition().x + (backgroundSprite2.getTexture()->getSize().x * 2), backgroundSprite2.getPosition().y);
+	}
+
+	gameManager->window->draw(skyboxSprite);
+	gameManager->window->draw(backgroundDunesSprite);
+	gameManager->window->draw(backgroundDunesSprite2);
+	gameManager->window->draw(backgroundSprite);
+	gameManager->window->draw(backgroundSprite2);
+
 	//UI
+	//ui background
+	sf::RectangleShape uiBackground;
+	uiBackground.setSize(watenk::Vector2(475, 75).convertToSFML());
+	uiBackground.setFillColor(sf::Color::Black);
+	uiBackground.setPosition(watenk::Vector2((screenWidth / 2) - 200.0f, screenHeight - 75.0f).convertToSFML());
+	gameManager->window->draw(uiBackground);
+
 	gameManager->window->draw(gameManager->fontManager->getText("Score:" + to_string(gameManager->score), 20, sf::Color::White, watenk::Vector2((screenWidth / 2) - 150.0f, screenHeight - 30.0f)));
 	gameManager->window->draw(gameManager->fontManager->getText("Health:" + to_string(gameManager->inputs->player->health), 20, sf::Color::Red, watenk::Vector2((screenWidth - screenWidth / 2) + 150.0f, screenHeight - 30.0f)));
 
 	if (gameManager->inputs->playerDashTimer >= dashDelay) {
-		gameManager->window->draw(gameManager->fontManager->getText("Dash Ready!!", 20, sf::Color::White, watenk::Vector2((screenWidth / 2) - 25.0f, screenHeight - 30.0f)));
+		gameManager->window->draw(gameManager->fontManager->getText("Dash Ready!!", 20, sf::Color::Cyan, watenk::Vector2((screenWidth / 2) - 25.0f, screenHeight - 30.0f)));
 	}
 
 	if (gameManager->inputs->playerBurstTimer >= burstDelay) {
-		gameManager->window->draw(gameManager->fontManager->getText("Burst Ready!!", 20, sf::Color::Blue, watenk::Vector2((screenWidth / 2) - 25.0f, screenHeight - 60.0f)));
+		gameManager->window->draw(gameManager->fontManager->getText("Burst Ready!!", 20, sf::Color::Magenta, watenk::Vector2((screenWidth / 2) - 25.0f, screenHeight - 60.0f)));
 	}
 
 	//TimeScore

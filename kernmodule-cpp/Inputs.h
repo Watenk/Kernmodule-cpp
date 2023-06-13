@@ -12,8 +12,8 @@ public:
 	Player* player;
 
 	bool isShooting = false;
-	float playerDashTimer = 0;
-	float playerBurstTimer = 0;
+	float playerDashTimer = 100;
+	float playerBurstTimer = 100;
 	
 private:
 	void mainMenuInputs();
