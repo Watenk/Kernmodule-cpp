@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
 #include <string>
 
 #include "BaseClass.h"
@@ -31,6 +32,12 @@ private:
 	int highScore1 = 0;
 	int highScore2 = 0;
 	int highScore3 = 0;
+
+	sf::Sprite skyboxSprite;
+	sf::Sprite backgroundSprite;
+	sf::Sprite backgroundSprite2;
+	sf::Sprite backgroundDunesSprite;
+	sf::Sprite backgroundDunesSprite2;
 
 	GameManager* gameManager;
 };

@@ -19,6 +19,7 @@ const float UPSSpeed = 60.0f; //Physics Update Speed per second
 const int timeScore = 1; //Every second
 const float gameOverTime = 5; //Time the gameOver screen is visible
 const bool ifShootingNoTimeScore = true;
+const float backgroundSpeed = 2.0f;
 
 //Player
 const int playerSpeed = 65;
