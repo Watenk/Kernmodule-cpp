@@ -1,4 +1,4 @@
-!\[game screenshot\](/READMEFiles/GameScreenshot.jpg
+![game screenshot!](/READMEFiles/GameScreenshot.jpg)
 
 ### Release:
 
@@ -40,7 +40,7 @@ Check out [GlobalData](https://github.com/IvarNuij/Kernmodule-cpp/blob/main/kern
 
 The collision is calculated in squares around each [PhysicsObject](https://github.com/IvarNuij/Kernmodule-cpp/blob/main/kernmodule-cpp/PhysicsObject.cpp). 
 
-!\[Debug screenshot\](/READMEFiles/DebugScreenshot.jpg
+![Debug screenshot!](/READMEFiles/DebugScreenshot.jpg)
 
 When 2 objects collide they take damage based on the force in newton, the velocity and position is calculated after that.
 
@@ -81,6 +81,8 @@ player->playerBulletOrigin = watenk::Vector2(player->pos.x + playerBulletOriginR
 //Calc BulletVelocity
 watenk::Vector2 bulletNewton(-std::cos(mouseRadian) * bulletSpeed, -std::sin(mouseRadian) * bulletSpeed);
 ```
+
+</details>
 
 </details>
 
