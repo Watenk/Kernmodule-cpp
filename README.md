@@ -1,15 +1,17 @@
 
-\--video--
+--Photo--
 
 ### Release:
 
-<https://github.com/IvarNuij/Kernmodule-cpp/releases> 
+[Releases]<https://github.com/IvarNuij/Kernmodule-cpp/releases> 
+
 
 ### About:
 
-The game a simple shooter where you try to get the highest score possible
+The game a simple shooter where you try to get the highest score possible. You shoot the enemy's that come your way and improve your score. But the higher your score is the faster, accurate,  the enemy's will be.
 
-Note: if you don't see the UI click on the maximize icon in the game window.
+> Note: if you don't see the UI click on the maximize icon in the game window.
+
 
 ### Controls:
 
@@ -21,13 +23,29 @@ Note: if you don't see the UI click on the maximize icon in the game window.
 
 **BulletBurst - E**
 
+
 ### Tweak the settings:
+
+
 
 ### CodeStucture:
 
-<https://github.com/IvarNuij/Kernmodule-cpp/blob/main/kernmodule-cpp/Vector2.cpp>
+####Math: 
+* Collision
 
-### 
+	The collision is calculated in squares
+	For more info see: [CollisionManager.cpp](https://github.com/IvarNuij/Kernmodule-cpp/blob/main/kernmodule-cpp/CollisionManager.cpp)
+
+* Friction
+
+
+* Vector2
+
+	See: [Vector2.cpp](https://github.com/IvarNuij/Kernmodule-cpp/blob/main/kernmodule-cpp/Vector2.cpp)
+
+* Geometry
+
+
 
 ### Source Reference:
 
