@@ -10,10 +10,8 @@ The game a simple shooter where you try to get the highest score possible. You s
 
 > Note: if you don't see the UI ingame click on the maximize icon in the game window.
 
-::: warn
-Your antivirus can be triggered by the game build because the game directly reads your keyboard keys and thinks it's a keylogger.
+> Waring: Your antivirus can be triggered by the game build because the game directly reads your keyboard keys and thinks it's a keylogger.
 
-:::
 
 ### Controls:
 
@@ -84,8 +82,7 @@ watenk::Vector2 bulletNewton(-std::cos(mouseRadian) * bulletSpeed, -std::sin(mou
 
 </details>
 
-</details>
-
+<details>
 <summary>Time</summary>
 
 The TimeManager calculates the frameTime, frameRate, upsTime and deltaTime.
